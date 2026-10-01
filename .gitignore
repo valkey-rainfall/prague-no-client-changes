@@ -31,3 +31,4 @@ figures/**/__pycache__/
 prague-deck/*.zip
 node_modules/
 __pycache__/
+fonts/**/.uuid
