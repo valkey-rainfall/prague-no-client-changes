@@ -25,7 +25,7 @@ keep it true; edit it when the contract changes.
 |---|---|---|
 | intro, bridge, slide player, key handling | Rimuru | `make_deck_page.py` -> `prague-deck/index.html` |
 | the five re-typeset slides (2, 4, 11, 15, 21) | Rimuru | `makeover/makeover.py` -> `prague-deck/slides-lite/` |
-| figures inside the body slides | Ranma | `figures/` (generators, `lib/fdbars.py`, `out/*.svg`), the `FIGURES` map in `makeover/patch_figures.py` |
+| figures and charts inside the body slides | Ranma | `figures/` (generators, `lib/fdbars.py`, `data/*.csv`, `out/*.svg`), the `FIGURES` map in `makeover/patch_figures.py` |
 | slide content and order | Rain (Google Slides) | `source/talk.pdf` is her export; replace it, never edit it |
 
 Ownership means "ask before changing", not "never touch". Leave a note in the commit message when you
@@ -56,7 +56,10 @@ and a Chromium it can launch.
 
 1. Figures are generated, not copied: the generator lives in `figures/` and writes SVG to `figures/out/`
    via `figures/build.sh`. The generators carry their own C struct snippets (copied from a named Valkey
-   commit, noted in a comment); nothing is read from a Valkey checkout. A one-off PNG is still accepted
+   commit, noted in a comment); nothing is read from a Valkey checkout. The 2x2 overhead charts come from
+   `figures/overhead_2x2.py` over Rimuru's settled measurements in `figures/data/` (matplotlib, glyphs as
+   paths so no font is needed at render time). Every figure page of the export is covered; only the
+   section slides, slide 2 and the credits are not generated here. A one-off PNG is still accepted
    by `patch_figures.py` (>= 3136 px wide, or it goes soft), but say why in the commit.
 2. Add or change the page -> file line in `FIGURES` in `makeover/patch_figures.py`. The script reads the
    figure rectangle from the PDF page, so the new figure lands exactly where Google Slides put the old one.
