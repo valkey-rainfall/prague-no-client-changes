@@ -22,7 +22,11 @@ on:
     paths:
       - 'prague-deck/**'
       - 'check_deck.py'
-      - 'makeover/makeover.py'
+      - 'build_deck.py'
+      - 'slides.py'
+      - 'figures/out/**'
+      - 'fonts/**'
+      - 'assets/**'
       - '.github/workflows/package-deck.yml'
     tags:
       - 'v*'
@@ -30,7 +34,11 @@ on:
     paths:
       - 'prague-deck/**'
       - 'check_deck.py'
-      - 'makeover/makeover.py'
+      - 'build_deck.py'
+      - 'slides.py'
+      - 'figures/out/**'
+      - 'fonts/**'
+      - 'assets/**'
       - '.github/workflows/package-deck.yml'
   workflow_dispatch:
     inputs:
@@ -53,8 +61,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check the committed deck (check_deck.py)
-        # Player points at slides-lite/, title/name baked in, no network references, manifests
-        # agree with the PNGs, only LITE_KEEP differs from the raw export, every PNG 2560x1440.
+        # Player points at slides/, title/name baked in, no network references, manifest agrees with
+        # the PNGs and with slides.py, every PNG was rendered from the current inputs, every PNG 2560x1440.
         run: python3 check_deck.py -v
 
   release:

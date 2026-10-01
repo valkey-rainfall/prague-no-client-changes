@@ -9,39 +9,40 @@ Open `prague-deck/index.html` in Chrome or Safari straight from disk (no server,
 press **F** for fullscreen, **Space** to begin. Sound starts on that first key. Keys, flow and URL
 options are in `prague-deck/README.md`.
 
-To proofread the body slides alone, browse `prague-deck/slides-lite/` -- one PNG per slide, named by
-the Google Slides page number (`s002.png` = page 2).
+To proofread the body slides alone, browse `prague-deck/slides/` -- one PNG per slide, in the order of
+`slides.py`. A PowerPoint version (`prague-deck.pptx`) is attached to every GitHub Release as a backup,
+or build one with `python3 export_pptx.py`.
 
 ## Layout
 
 | path | what |
 |---|---|
-| `prague-deck/index.html` | the deck: intro + bridge + slide player, fully self-contained |
-| `prague-deck/slides/` | body slides exactly as exported from Google Slides (pages 2..22) |
-| `prague-deck/slides-lite/` | what `index.html` shows: the export with 5 slides re-typeset (slide 2 and the section slides 4, 11, 15, 21) |
-| `source/talk.pdf` | the Google Slides PDF export the slides come from |
+| `slides.py` | **the deck**: every body slide, in order, with its title, text and figure. Edit this. |
+| `build_deck.py` | renders `slides.py` -> `prague-deck/slides/*.png` (2560x1440) + `slides.json`/`slides.js` |
+| `prague-deck/index.html` | the talk as one page: intro + bridge + slide player, fully self-contained |
+| `prague-deck/slides/` | the rendered body slides (checked in so a plain checkout opens) |
+| `figures/` | every figure and chart: generators (C-struct layouts probed by `fieldday`, pinned in `requirements.txt`; charts from `figures/data/*.csv` via matplotlib) and their output `figures/out/*.svg` |
+| `assets/credits.png` | the credits table, a finished PNG used as is |
+| `fonts/` | Open Sans and Fira Mono (OFL), the only faces the deck uses |
 | `make_deck_page.py` | writes `prague-deck/index.html` (intro, bridge, player, key handling) |
-| `make_slides.py` | renders a PDF export to `prague-deck/slides/` at 2560 px (`--skip 1` drops the title page) |
-| `figures/` | every figure and chart in the body slides: generators (C-struct layouts probed by `fieldday`, pinned in `requirements.txt`; charts from `figures/data/*.csv` via matplotlib) and their output `figures/out/*.svg` |
-| `makeover/patch_figures.py` | pastes figures from `figures/out/` into slides (page -> figure map inside; a page may expand into a click sequence) |
-| `makeover/makeover.py` | renders the 5 re-typeset slides and assembles `slides-lite/` |
-| `mock_slide2.py` | the three slide-2 mockups (A was chosen) |
+| `export_pptx.py` | one full-bleed PNG per slide into a 16:9 `.pptx`, sign-on still in front |
+| `check_deck.py` | the contract CI enforces: manifest, spec, freshness, offline, 2560x1440 |
 | `test_deck.mjs` | headless run-through: drives the page with clicker keys, screenshots each phase |
-| `fonts/opensans/` | Open Sans (OFL) used by the re-typeset slides |
+| `mock_slide2.py` | the three slide-2 mockups (A was chosen) |
+| `source/talk.pdf` | the last Google Slides export, kept for the record; nothing reads it |
 
-## Rebuild (after a new Google Slides export, or a figure change)
+## Rebuild (after editing `slides.py` or a figure)
 
 ```
-python3 -m venv .venv && .venv/bin/pip install --only-binary=:all: -r requirements.txt   # once
-./build.sh                                              # figures/out/ -> slides/ -> figure swap -> slides-lite/
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt   # once
+./build.sh                                              # figures/out/ -> prague-deck/slides/ -> check_deck.py
 node test_deck.mjs /tmp/deck-run                        # optional: screenshots of the whole run
 ```
 
-`build.sh` runs, in order: `figures/build.sh` (generators -> `figures/out/*.svg`), `make_slides.py`
-(PDF -> `prague-deck/slides/`), `makeover/patch_figures.py` (SVGs into the slides, rasterised at the
-slide's box width), `makeover/makeover.py` (5 re-typeset slides + the rest -> `slides-lite/`).
-Needs a C compiler on PATH (`fieldday` compiles a tiny program per struct to read `offsetof()`); the
-test needs Node >= 20 with `playwright`.
+`build.sh` runs, in order: `figures/build.sh` (generators -> `figures/out/*.svg`), `build_deck.py`
+(`slides.py` -> `prague-deck/slides/`; only slides whose inputs changed are re-rendered, `--all` for
+everything), `check_deck.py`. Needs a C compiler on PATH (`fieldday` compiles a tiny program per struct
+to read `offsetof()`); the test needs Node >= 20 with `playwright`.
 Keep the first body slide's background pure white so the bridge lands on it with no visible cut.
 
 ## Style

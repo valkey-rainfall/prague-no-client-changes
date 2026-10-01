@@ -1,4 +1,4 @@
-# Allowlist: only the web deck, its builders, fonts and the slide source are tracked.
+# Allowlist: only the web deck, its builders, fonts, figures and the credits table are tracked.
 # Everything else in this folder (PPTX decks, rendered videos, frame dumps, previews) is scratch.
 *
 !.gitignore
@@ -9,14 +9,14 @@
 !prague-deck/
 !prague-deck/**
 !make_deck_page.py
-!make_slides.py
+!slides.py
+!build_deck.py
+!export_pptx.py
 !check_deck.py
 !test_deck.mjs
 !mock_slide2.py
-!makeover/
-!makeover/makeover.py
-!makeover/patch_figures.py
-!makeover/test_makeover.mjs
+!assets/
+!assets/credits.png
 !figures/
 !figures/**
 !requirements.txt

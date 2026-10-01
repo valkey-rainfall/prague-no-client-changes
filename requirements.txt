@@ -1,9 +1,7 @@
 # Python deps for the whole pipeline: figures -> slides -> deck.
 #   python3 -m venv .venv && .venv/bin/pip install --only-binary=:all: -r requirements.txt
-# (--only-binary avoids a from-source PyMuPDF build on aarch64; drop it if a wheel is missing for you.)
 # fieldday is pinned to a commit on purpose: the figures are byte-reproducible against it.
 # Also needs a C compiler on PATH (cc/gcc/clang): fieldday compiles a tiny program per struct for offsetof().
-pymupdf<1.25
 pillow
 cairosvg
 matplotlib
