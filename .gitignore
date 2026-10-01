@@ -10,6 +10,7 @@
 !prague-deck/**
 !make_deck_page.py
 !make_slides.py
+!check_deck.py
 !test_deck.mjs
 !mock_slide2.py
 !makeover/

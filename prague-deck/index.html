@@ -394,7 +394,7 @@
 <div id="termbar" class="mono"><button id="replay2" title="Play the sign-on intro again (with or without sound)">♪ REPLAY INTRO</button></div>
 <button id="skip" class="mono">SKIP  [ESC]</button>
 
-<script src="slides.js"></script>
+<script src="slides-lite/slides.js"></script>
 <div id="bline"></div><div id="bwhite"></div>
 <div id="deck" aria-label="slides"></div><div id="blackout"></div>
 <div id="hint">PRESS SPACE TO BEGIN</div><div id="clock"></div><div id="preload"></div>
@@ -1790,10 +1790,10 @@ function deckShow(i) {
   DECK.idx = Math.max(0, Math.min(imgs.length - 1, i));
   imgs.forEach((im, k) => im.classList.toggle('cur', k === DECK.idx));
 }
-async function deckLoadSlides() {                   // slides.js (works from file://) or slides.json (served)
+async function deckLoadSlides() {                   // slides-lite/slides.js (file://) or slides-lite/slides.json (served)
   try {
     if (window.SLIDES) DECK.slides = window.SLIDES;
-    else { const r = await fetch('slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
+    else { const r = await fetch('slides-lite/slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
     const d = document.getElementById('deck');
     DECK.decoded = 0;
     // Decode every slide upfront and track completion. deckBridge() waits on

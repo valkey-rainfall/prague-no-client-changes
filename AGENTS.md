@@ -71,6 +71,12 @@ and a Chromium it can launch.
 
 ## Checking your work
 
+- `python3 check_deck.py -v` first, every time, before you commit. Standard library only, a second to run,
+  and CI runs the same script on every push to `main`. It checks that `index.html` loads `slides-lite/`
+  (not the raw `slides/`), that the title and name are baked into the page, that nothing references the
+  network, that the four slide lists agree with each other and with the PNGs, that only `LITE_KEEP`
+  (the five re-typeset slides) differs from the raw export, and that every PNG is 2560x1440. A caption or
+  marker added to a body slide fails the `lite` check on purpose: see "Style, so we stop re-deciding it" below.
 - `node test_deck.mjs <dir>` must list every slide in `prague-deck/slides.js` (26 since the chain sequence
   replaced pages 12-13) and the last screenshot must be the first body slide landing after the white-out.
   If the count disagrees with `slides.js`, the lists are stale: rerun from `patch_figures.py` down.
