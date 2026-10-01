@@ -11,10 +11,10 @@
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="228.0" y="0.0" width="96.0" height="44" rx="0"/>
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="324.0" y="0.0" width="6.0" height="44" rx="0"/></g>
 <rect x="16.0" y="64.0" width="330.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
-<text x="40.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
-<text x="88.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#ffffff" text-anchor="middle">*ptr</text>
-<text x="172.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">key (16 B)</text>
-<text x="292.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<text x="40.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
+<text x="88.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#ffffff" text-anchor="middle">*ptr</text>
+<text x="172.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">key (16 B)</text>
+<text x="292.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
 <text x="181.0" y="122.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">55 B</text>
 <path d="M88.0,64.0 L88.0,44.0 L226.0,44.0 L226.0,62.0" stroke="#e07b39" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
 <text x="16.0" y="166.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#666666" text-anchor="start">After</text>
@@ -26,8 +26,8 @@
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="180.0" y="0.0" width="96.0" height="44" rx="0"/>
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="276.0" y="0.0" width="6.0" height="44" rx="0"/></g>
 <rect x="16.0" y="184.0" width="282.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
-<text x="40.0" y="209.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
-<text x="124.0" y="209.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">key (16 B)</text>
-<text x="244.0" y="209.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<text x="40.0" y="209.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
+<text x="124.0" y="209.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">key (16 B)</text>
+<text x="244.0" y="209.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
 <text x="157.0" y="242.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">47 B</text>
 </svg>

@@ -254,13 +254,14 @@ def size_label(x, w, y, n):
 
 
 MIN_INBOX_PX = 30   # a field narrower than this gets a callout above instead
-CHAR_PX = 6.3       # approx advance of the 10.5px mono theme font
+INBOX_PX = 11       # cap for in-box field labels (shrink-to-fit below this, floor 8)
+CHAR_PX = 6.3       # approx advance of the mono theme font at 10.5 px (Fira Mono and DejaVu Sans Mono both ~0.6 em)
 CALLOUT_ROW = 12    # px between the two callout rows (second row is used only on collision)
 # Slide readability: text outside the bars is lifted (a 720 px canvas on a 12 in slide puts
 # 13 px at ~15.6 pt); in-box field labels stay at 10.5 px since a wider font needs a wider bar.
 SIZE_PX = 13        # "37 B" under a bar
 LEGEND_PX = 13
-CALLOUT_PX = 10.5   # field callouts above a bar (was 9.5)
+CALLOUT_PX = 11     # field callouts above a bar (10.5 under DejaVu; Fira Mono's x-height is ~5% lower)
 
 
 def label_fields(b: Bar, x0: float, y0: float, relabel: dict | None = None,
@@ -311,7 +312,7 @@ def label_fields(b: Bar, x0: float, y0: float, relabel: dict | None = None,
         if fw >= MIN_INBOX_PX:
             longest = max(len(ln) for ln in lines)
             # shrink to fit the box width, floor at 8px
-            fs = min(10.5, max(8.0, (fw - 6) / (longest * (CHAR_PX / 10.5))))
+            fs = min(INBOX_PX, max(8.0, (fw - 6) / (longest * (CHAR_PX / 10.5))))
             lh = fs + 1
             total = lh * len(lines)
             ty = y0 + b.height / 2 - total / 2 + fs * 0.85
