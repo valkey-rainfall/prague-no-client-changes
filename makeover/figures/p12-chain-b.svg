@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="884" viewBox="0 0 884 429" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace">
+<defs><defs><pattern id="fd-hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect class="fd-hatch-background" fill="#f5f7f7" width="6" height="6"/><line class="fd-hatch-lines" stroke="#b9c2cc" stroke-width="1.5" x1="0" y1="0" x2="0" y2="6"/></pattern></defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#e07b39"/></marker></defs>
+<rect width="884" height="429" fill="#ffffff"/>
+<text x="16.0" y="28.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#666666" text-anchor="start">Valkey 8.0 — the key moves into the entry (PR 541)</text>
+<g transform="translate(16.00 108.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/></g>
+<rect x="16.0" y="108.0" width="32.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="32.0" y="184.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">8 B</text>
+<path d="M32.0,108.0 L32.0,88.0 L56.0,88.0 L56.0,130.0 L80.0,130.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="80.0,130.0 72.0,126.0 72.0,134.0" fill="#e07b39"/>
+<g transform="translate(592.00 108.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/></g>
+<rect x="592.0" y="108.0" width="32.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="608.0" y="184.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">8 B</text>
+<path d="M608.0,108.0 L608.0,88.0 L632.0,88.0 L632.0,130.0 L656.0,130.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="656.0,130.0 648.0,126.0 648.0,134.0" fill="#e07b39"/>
+<g transform="translate(82.00 108.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="8.0" height="44" rx="0"/>
+<rect class="fd-role-data" fill="#7b86e6" stroke="#30176e" stroke-width="1" x="72.0" y="0.0" width="64.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="136.0" y="0.0" width="4.0" height="44" rx="0"/></g>
+<rect x="82.0" y="108.0" width="140.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="98.0" y="132.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*value</text>
+<text x="130.0" y="132.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.666666666666666" font-weight="normal" fill="#3a4550" text-anchor="middle">*next</text>
+<text x="186.0" y="132.9" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="9.666666666666666" font-weight="normal" fill="#ffffff" text-anchor="middle">key (16 B)</text>
+<g transform="translate(306.00 108.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="12.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="76.0" y="0.0" width="64.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="140.0" y="0.0" width="4.0" height="44" rx="0"/></g>
+<rect x="306.0" y="108.0" width="144.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="322.0" y="133.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
+<text x="354.0" y="132.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*value</text>
+<text x="414.0" y="132.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.055555555555557" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<g transform="translate(658.00 108.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="32.0" height="44" rx="0"/></g>
+<rect x="658.0" y="108.0" width="96.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="674.0" y="133.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">*key</text>
+<text x="706.0" y="132.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">expiry</text>
+<text x="738.0" y="132.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.666666666666666" font-weight="normal" fill="#3a4550" text-anchor="middle">*next</text>
+<path d="M98.0,108.0 L98.0,88.0 L280.0,88.0 L280.0,130.0 L304.0,130.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="304.0,130.0 296.0,126.0 296.0,134.0" fill="#e07b39"/>
+<path d="M674.0,152.0 L674.0,162.0 L186.0,162.0 L186.0,153.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="186.0,153.0 182.0,161.0 190.0,161.0" fill="#e07b39"/>
+<path d="M130.0,152.0 L130.0,174.0 L88.0,174.0 L88.0,213.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="88.0,213.0 84.0,205.0 92.0,205.0" fill="#e07b39"/>
+<path d="M738.0,152.0 L738.0,174.0 L664.0,174.0 L664.0,213.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="664.0,213.0 660.0,205.0 668.0,205.0" fill="#e07b39"/>
+<g transform="translate(82.00 214.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="8.0" height="44" rx="0"/>
+<rect class="fd-role-data" fill="#7b86e6" stroke="#30176e" stroke-width="1" x="72.0" y="0.0" width="64.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="136.0" y="0.0" width="4.0" height="44" rx="0"/></g>
+<rect x="82.0" y="214.0" width="140.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="98.0" y="238.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*value</text>
+<text x="130.0" y="238.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.666666666666666" font-weight="normal" fill="#3a4550" text-anchor="middle">*next</text>
+<text x="186.0" y="238.9" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="9.666666666666666" font-weight="normal" fill="#ffffff" text-anchor="middle">key (16 B)</text>
+<g transform="translate(306.00 214.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="12.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="76.0" y="0.0" width="64.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="140.0" y="0.0" width="4.0" height="44" rx="0"/></g>
+<rect x="306.0" y="214.0" width="144.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="322.0" y="239.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
+<text x="354.0" y="238.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*value</text>
+<text x="414.0" y="238.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.055555555555557" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<g transform="translate(658.00 214.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="32.0" height="44" rx="0"/></g>
+<rect x="658.0" y="214.0" width="96.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="674.0" y="239.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">*key</text>
+<text x="706.0" y="238.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">expiry</text>
+<text x="738.0" y="238.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.666666666666666" font-weight="normal" fill="#3a4550" text-anchor="middle">*next</text>
+<path d="M98.0,214.0 L98.0,194.0 L280.0,194.0 L280.0,236.0 L304.0,236.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="304.0,236.0 296.0,232.0 296.0,240.0" fill="#e07b39"/>
+<path d="M674.0,258.0 L674.0,268.0 L186.0,268.0 L186.0,259.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="186.0,259.0 182.0,267.0 190.0,267.0" fill="#e07b39"/>
+<path d="M130.0,258.0 L130.0,280.0 L88.0,280.0 L88.0,319.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="88.0,319.0 84.0,311.0 92.0,311.0" fill="#e07b39"/>
+<path d="M738.0,258.0 L738.0,280.0 L664.0,280.0 L664.0,319.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="664.0,319.0 660.0,311.0 668.0,311.0" fill="#e07b39"/>
+<g transform="translate(82.00 320.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="8.0" height="44" rx="0"/>
+<rect class="fd-role-data" fill="#7b86e6" stroke="#30176e" stroke-width="1" x="72.0" y="0.0" width="64.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="136.0" y="0.0" width="4.0" height="44" rx="0"/></g>
+<rect x="82.0" y="320.0" width="140.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="98.0" y="344.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*value</text>
+<text x="130.0" y="344.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.666666666666666" font-weight="normal" fill="#3a4550" text-anchor="middle">*next</text>
+<text x="186.0" y="344.9" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="9.666666666666666" font-weight="normal" fill="#ffffff" text-anchor="middle">key (16 B)</text>
+<text x="152.0" y="396.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">35 B</text>
+<g transform="translate(306.00 320.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="12.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="76.0" y="0.0" width="64.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="140.0" y="0.0" width="4.0" height="44" rx="0"/></g>
+<rect x="306.0" y="320.0" width="144.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="322.0" y="345.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">robj</text>
+<text x="354.0" y="344.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*value</text>
+<text x="414.0" y="344.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.055555555555557" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<text x="378.0" y="396.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">36 B</text>
+<g transform="translate(658.00 320.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="32.0" y="0.0" width="32.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="64.0" y="0.0" width="32.0" height="44" rx="0"/></g>
+<rect x="658.0" y="320.0" width="96.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="674.0" y="345.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">*key</text>
+<text x="706.0" y="344.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">expiry</text>
+<text x="738.0" y="344.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.666666666666666" font-weight="normal" fill="#3a4550" text-anchor="middle">*next</text>
+<text x="706.0" y="396.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">24 B</text>
+<path d="M98.0,320.0 L98.0,300.0 L280.0,300.0 L280.0,342.0 L304.0,342.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="304.0,342.0 296.0,338.0 296.0,346.0" fill="#e07b39"/>
+<path d="M674.0,364.0 L674.0,374.0 L186.0,374.0 L186.0,365.0" stroke="#e07b39" stroke-width="2" fill="none"/>
+<polygon points="186.0,365.0 182.0,373.0 190.0,373.0" fill="#e07b39"/>
+<text x="16.0" y="50.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">keyspace dict</text>
+<text x="82.0" y="64.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">dictEntry</text>
+<text x="306.0" y="64.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">object</text>
+<text x="592.0" y="50.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">expires dict</text>
+<text x="658.0" y="64.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">dictEntry</text>
+</svg>
