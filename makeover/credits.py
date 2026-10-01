@@ -61,7 +61,7 @@ SHORT = {  # change column, kept to a few words: the PR numbers appeared on the 
 # design-unit geometry. MODE 'change': one row per contribution, Release | Change | Authors | Reviewers.
 # MODE 'release': one row per release, the changes stacked, names deduplicated across that release's PRs.
 # The PR numbers are not shown in either: nobody looks one up from a slide, and they were on the figure slides.
-MODE = 'change'
+MODE = 'release'
 X0, X1 = 80, 1840                       # side margins (the frame's own are 120)
 TABLE_TOP = 185
 if MODE == 'change':
