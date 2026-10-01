@@ -9,15 +9,15 @@
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="102.0" y="0.0" width="96.0" height="44" rx="0"/>
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="198.0" y="0.0" width="6.0" height="44" rx="0"/></g>
 <rect x="16.0" y="64.0" width="204.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
-<text x="40.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#ffffff" text-anchor="middle">*value</text>
-<text x="91.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">pad</text>
-<text x="166.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">field (16 B)</text>
+<text x="40.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#ffffff" text-anchor="middle">*value</text>
+<text x="91.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">pad</text>
+<text x="166.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">field (16 B)</text>
 <text x="118.0" y="122.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">34 B</text>
 <g transform="translate(254.00 64.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="6.0" height="44" rx="0"/>
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="6.0" y="0.0" width="96.0" height="44" rx="0"/>
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="102.0" y="0.0" width="6.0" height="44" rx="0"/></g>
 <rect x="254.0" y="64.0" width="108.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
-<text x="308.0" y="89.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<text x="308.0" y="89.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
 <text x="308.0" y="122.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">18 B</text>
 <path d="M40.0,64.0 L40.0,44.0 L226.0,44.0 L226.0,86.0 L252.0,86.0" stroke="#e07b39" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
 <text x="16.0" y="166.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#666666" text-anchor="start">After</text>
@@ -28,7 +28,7 @@
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="126.0" y="0.0" width="96.0" height="44" rx="0"/>
 <rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="222.0" y="0.0" width="6.0" height="44" rx="0"/></g>
 <rect x="16.0" y="184.0" width="228.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
-<text x="70.0" y="209.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">field (16 B)</text>
-<text x="190.0" y="209.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
+<text x="70.0" y="209.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">field (16 B)</text>
+<text x="190.0" y="209.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="11" font-weight="normal" fill="#3a4550" text-anchor="middle">value (16 B)</text>
 <text x="130.0" y="242.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">38 B</text>
 </svg>

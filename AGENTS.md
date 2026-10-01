@@ -69,7 +69,7 @@ and a Chromium it can launch.
    a step sequence drawn in the figure) or to `None` (dropped). The script then rewrites
    `prague-deck/slides.json` / `slides.js`, so the count can differ from the PDF's page count.
 3. Run the pipeline from step 2 down, open `prague-deck/slides-lite/sNNN.png` and look at it. Keep the
-   figure grammar the deck already uses: orange pointers, grey overhead, blue user data, DejaVu Mono labels.
+   figure grammar the deck already uses: orange pointers, grey overhead, blue user data, Fira Mono labels.
 4. Commit `makeover/figures/*`, `patch_figures.py` and the regenerated PNGs together.
 
 ## Checking your work
@@ -85,8 +85,9 @@ and a Chromium it can launch.
   If the count disagrees with `slides.js`, the lists are stale: rerun from `patch_figures.py` down.
 - The deck opens from `file://` with no network. Anything that needs a server, a CDN or a font download
   is a regression; the venue wifi is not part of the design.
-- Open Sans is vendored in `fonts/opensans/` (OFL). Scripts look there first, then
-  `~/.local/share/fonts/opensans`. Do not depend on a system font.
+- Open Sans is vendored in `fonts/opensans/`, Fira Mono in `fonts/firamono/` (both OFL). Scripts look there
+  first (`patch_figures.py` hands the folder to fontconfig through a generated `FONTCONFIG_FILE`, so cairo
+  resolves `Fira Mono` with nothing installed). Do not depend on a system font.
 
 ## Style, so we stop re-deciding it
 

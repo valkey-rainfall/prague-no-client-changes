@@ -58,12 +58,33 @@ def figure_box(page, slide):
     return tuple(round(v * k) for v in (rect.x0, rect.y0, rect.x1, rect.y1))
 
 
-MONO = 'DejaVu Sans Mono'                                    # cairosvg does not resolve a generic 'monospace'; pin the deck's label font
+MONO = 'Fira Mono'       # the figures' label face (valkey.io's code font). cairosvg does not walk a CSS font
+                         # stack, so the SVG's family list is replaced by this one name before rasterising.
+FONTS = HERE.parent / 'fonts'   # vendored OFL faces: firamono/, opensans/. Made visible to cairo below.
+
+
+def fontconfig_for_vendored_fonts():
+    """Point fontconfig (which cairo uses to resolve family names) at the repo's fonts/ in addition to the
+    system's, via a generated FONTCONFIG_FILE. Self-contained: no ~/.local/share/fonts install needed, same
+    result on every host. Must run before cairo initialises fontconfig, i.e. before cairosvg is imported."""
+    import os, tempfile
+    if os.environ.get('FONTCONFIG_FILE', '').endswith('prague-fonts.conf'):
+        return
+    conf = Path(tempfile.gettempdir()) / 'prague-fonts.conf'
+    conf.write_text(f'''<?xml version="1.0"?><!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <include ignore_missing="yes">/etc/fonts/fonts.conf</include>
+  <dir>{FONTS}</dir>
+  <cachedir>{Path(tempfile.gettempdir()) / 'prague-fc-cache'}</cachedir>
+</fontconfig>
+''')
+    os.environ['FONTCONFIG_FILE'] = str(conf)
 
 
 def load_figure(fig, bw):
     if fig.suffix.lower() == '.svg':                        # rasterise at the box width: crisp at native slide resolution
         import re
+        fontconfig_for_vendored_fonts()
         import cairosvg
         svg = re.sub(r'font-family="[^"]*"', f'font-family="{MONO}"', fig.read_text())
         png = cairosvg.svg2png(bytestring=svg.encode(), output_width=bw)

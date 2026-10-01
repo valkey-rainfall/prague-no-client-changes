@@ -57,7 +57,11 @@ C_MAIN = "#1F4E79"
 C_ALT = "#7FA3C7"          # lighter tint of the same blue for the second string line
 FUTURE = 1.0
 
+from matplotlib import font_manager
+for _f in sorted((HERE.parent / "fonts/opensans").glob("OpenSans-*.ttf")):   # the deck's text face, vendored (OFL)
+    font_manager.fontManager.addfont(str(_f))
 plt.rcParams.update({
+    "font.family": "Open Sans",
     "font.size": 14, "axes.titlesize": 17, "axes.titleweight": "bold",
     "figure.facecolor": "#FFFFFF", "axes.facecolor": "#FFFFFF",
     "savefig.facecolor": "#FFFFFF", "axes.spines.top": False, "axes.spines.right": False,
