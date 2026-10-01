@@ -1158,7 +1158,7 @@ function vampText() {
   if (!vamp.classList.contains('hold')) {                       // LOAD corner: the loader line, through 100% until the sign-on takes over
     const n = Math.round(loader.progress * 22), mb = (loader.bytes / 1048576).toFixed(1), done = loader.phase !== 'download';
     const stalled = false;
-    return `> LOADING VALKEY-SERVER.WASM ... <b>${String(Math.floor(loader.progress * 100)).padStart(3)}%</b>  ${'#'.repeat(n)}${'.'.repeat(22 - n)}  ${mb} / ${(loader.total / 1048576).toFixed(1)} MB${stalled ? '  <span class="dim">(stalled)</span>' : done ? '  <span class="dim">(booting)</span>' : ''}`;
+    return `> OPTIMIZING VALKEY MEMORY ... <b>${String(Math.floor(loader.progress * 100)).padStart(3)}%</b>  ${'#'.repeat(n)}${'.'.repeat(22 - n)}  ${mb} / ${(loader.total / 1048576).toFixed(1)} MB${stalled ? '  <span class="dim">(stalled)</span>' : done ? '  <span class="dim">(booting)</span>' : ''}`;
   }
   const tail = loader.lines.slice(-3).map(l => `<span class="dim">${esc(l.length > 58 ? l.slice(0, 57) + '…' : l)}</span>`).join('\n');
   return `<span class="dim">> BOOT ..............${loader.ready ? '. <b>READY</b>' : '.. <b>...</b>'}</span>\n${tail}`;

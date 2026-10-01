@@ -35,8 +35,8 @@ swap('if (REAL) startRealLoader(...loaderParams()); else startLoader(...loaderPa
 # quartile -> vamp layer: 25%=0, 50%=1, 75%=2, 100%=3 (the stills' four steps)
 swap('const layer = Math.min(3, Math.floor(loader.progress * 4));',
      'const layer = Math.min(3, Math.max(0, Math.ceil(loader.progress * 4 - 1e-6) - 1));')
-# the loader line reads as the web page does, not as the mock
-swap("LOADING ${REAL ? 'VALKEY-SERVER.WASM' : 'EMULATOR'}", 'LOADING VALKEY-SERVER.WASM')
+# the loader line is the talk's own gag, not the web page's download readout
+swap("LOADING ${REAL ? 'VALKEY-SERVER.WASM' : 'EMULATOR'}", 'OPTIMIZING VALKEY MEMORY')
 # the held loader is not a stalled download
 swap("const stalled = !done && performance.now() - loader.lastBytesAt > 350;", 'const stalled = false;')
 # no try-valkey chrome, no cursor once started
