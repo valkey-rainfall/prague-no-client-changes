@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="662" viewBox="0 0 662 319" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace">
+<defs><defs><pattern id="fd-hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect class="fd-hatch-background" fill="#f5f7f7" width="6" height="6"/><line class="fd-hatch-lines" stroke="#b9c2cc" stroke-width="1.5" x1="0" y1="0" x2="0" y2="6"/></pattern></defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#e07b39"/></marker></defs>
+<rect width="662" height="319" fill="#ffffff"/>
+<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#ffffff"/><line x1="0" y1="0" x2="0" y2="6" stroke="#30176e" stroke-width="1.4"/></pattern></defs>
+<text x="16.0" y="28.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#666666" text-anchor="start">Before</text>
+<g transform="translate(16.00 74.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="48.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="48.0" y="0.0" width="48.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="96.0" y="0.0" width="48.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="144.0" y="0.0" width="48.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="192.0" y="0.0" width="12.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="204.0" y="0.0" width="120.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="324.0" y="0.0" width="6.0" height="44" rx="0"/></g>
+<rect x="16.0" y="74.0" width="330.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<text x="40.0" y="99.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">score</text>
+<text x="88.0" y="98.3" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="8.0" font-weight="normal" fill="#3a4550" text-anchor="middle">*backward</text>
+<text x="136.0" y="93.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.0" font-weight="normal" fill="#3a4550" text-anchor="middle">level 1</text>
+<text x="136.0" y="104.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.0" font-weight="normal" fill="#3a4550" text-anchor="middle">forward</text>
+<text x="184.0" y="93.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.0" font-weight="normal" fill="#3a4550" text-anchor="middle">level 1</text>
+<text x="184.0" y="104.5" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.0" font-weight="normal" fill="#3a4550" text-anchor="middle">span</text>
+<path d="M214.0,74.0 L214.0,71.0" stroke="#30176e" stroke-width="0.8" fill="none"/>
+<text x="214.0" y="68.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#002a3a" text-anchor="middle">string header</text>
+<text x="280.0" y="99.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">member (20 B)</text>
+<path d="M343.0,74.0 L343.0,71.0" stroke="#30176e" stroke-width="0.8" fill="none"/>
+<text x="343.0" y="68.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#002a3a" text-anchor="middle">NUL</text>
+<text x="181.0" y="132.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">55 B</text>
+<text x="16.0" y="49.6" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">zskiplistNode</text>
+<rect x="346.0" y="74.0" width="32.0" height="44.0" fill="url(#hatch)" stroke="#30176e" stroke-width="1.2"/>
+<text x="346.0" y="132.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="start">+ 5.3 B expected extra levels = 60.3 B</text>
+<text x="16.0" y="170.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#666666" text-anchor="start">After</text>
+<g transform="translate(16.00 216.00)"><rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="0.0" y="0.0" width="6.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="6.0" y="0.0" width="48.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="54.0" y="0.0" width="120.0" height="44" rx="0"/>
+<rect class="fd-role-overhead" fill="#dde2e8" stroke="#30176e" stroke-width="1" x="174.0" y="0.0" width="6.0" height="44" rx="0"/></g>
+<rect x="16.0" y="216.0" width="180.0" height="44.0" fill="none" stroke="#30176e" stroke-width="1.2"/>
+<path d="M19.0,216.0 L19.0,213.0" stroke="#30176e" stroke-width="0.8" fill="none"/>
+<text x="42.9" y="210.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#002a3a" text-anchor="middle">string header</text>
+<text x="46.0" y="241.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">score</text>
+<text x="130.0" y="241.2" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#3a4550" text-anchor="middle">member (20 B)</text>
+<path d="M193.0,216.0 L193.0,213.0" stroke="#30176e" stroke-width="0.8" fill="none"/>
+<text x="193.0" y="210.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="10.5" font-weight="normal" fill="#002a3a" text-anchor="middle">NUL</text>
+<text x="106.0" y="274.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="middle">30 B</text>
+<text x="16.0" y="191.6" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="12.5" font-weight="normal" fill="#666666" text-anchor="start">item</text>
+<rect x="196.0" y="216.0" width="53.7" height="44.0" fill="url(#hatch)" stroke="#30176e" stroke-width="1.2"/>
+<text x="196.0" y="274.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="start">+ 9 B share of B+ tree nodes = 39 B</text>
+<rect x="16" y="291" width="12" height="12" fill="#dde2e8" stroke="#30176e" stroke-width="1"/>
+<text x="33.0" y="301.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="start">fields of the struct</text>
+<rect x="215" y="291" width="12" height="12" fill="url(#hatch)" stroke="#30176e" stroke-width="1"/>
+<text x="232.0" y="301.0" font-family="'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', monospace" font-size="13" font-weight="normal" fill="#666666" text-anchor="start">per-member average of everything around it</text>
+</svg>
