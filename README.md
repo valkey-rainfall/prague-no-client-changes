@@ -22,7 +22,7 @@ the Google Slides page number (`s002.png` = page 2).
 | `source/talk.pdf` | the Google Slides PDF export the slides come from |
 | `make_deck_page.py` | writes `prague-deck/index.html` (intro, bridge, player, key handling) |
 | `make_slides.py` | renders a PDF export to `prague-deck/slides/` at 2560 px (`--skip 1` drops the title page) |
-| `figures/` | the figure generators (C-struct layouts probed by `fieldday`, pinned in `requirements.txt`) and their output `figures/out/*.svg` |
+| `figures/` | every figure and chart in the body slides: generators (C-struct layouts probed by `fieldday`, pinned in `requirements.txt`; charts from `figures/data/*.csv` via matplotlib) and their output `figures/out/*.svg` |
 | `makeover/patch_figures.py` | pastes figures from `figures/out/` into slides (page -> figure map inside; a page may expand into a click sequence) |
 | `makeover/makeover.py` | renders the 5 re-typeset slides and assembles `slides-lite/` |
 | `mock_slide2.py` | the three slide-2 mockups (A was chosen) |

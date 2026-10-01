@@ -1,0 +1,49 @@
+workload,type,shape,payload_bytes,release,release_date,measured_commit,total_bytes_per_item,overhead_bytes_per_item,loaded_total,settled_total,basis
+set-k16-v64,string,"16 B key, 64 B value",80,7.2.4,2024-01-09,f7b1d0287d62,157.45,77.45,164.34,157.45,measured settled
+set-k16-v64,string,"16 B key, 64 B value",80,8.0,2024-07-31,4b8de6b1be24,149.45,69.45,156.37,149.45,measured settled
+set-k16-v64,string,"16 B key, 64 B value",80,8.1,2025-02-13,c5ae37f223cc,135.11,55.11,135.11,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64,string,"16 B key, 64 B value",80,9.0,2025-08-12,6c2e4f955310,135.11,55.11,135.11,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64,string,"16 B key, 64 B value",80,9.1,2026-03-11,8051de740dd3,135.12,55.12,135.12,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64,string,"16 B key, 64 B value",80,9.2,2026-09-16,23c73ab6f206,111.17,31.17,111.17,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64-expire,string+TTL,"16 B key, 64 B value, TTL",80,7.2.4,2024-01-09,f7b1d0287d62,194.87,114.87,201.77,194.87,measured settled
+set-k16-v64-expire,string+TTL,"16 B key, 64 B value, TTL",80,8.0,2024-07-31,4b8de6b1be24,186.87,106.87,193.8,186.87,measured settled
+set-k16-v64-expire,string+TTL,"16 B key, 64 B value, TTL",80,8.1,2025-02-13,c5ae37f223cc,158.04,78.04,158.04,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64-expire,string+TTL,"16 B key, 64 B value, TTL",80,9.0,2025-08-12,6c2e4f955310,158.04,78.04,158.04,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64-expire,string+TTL,"16 B key, 64 B value, TTL",80,9.1,2026-03-11,6c329dfe2c02,158.02,78.02,158.02,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v64-expire,string+TTL,"16 B key, 64 B value, TTL",80,9.2,2026-09-16,23c73ab6f206,142.09,62.09,142.09,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16,string,"16 B key, 16 B value",32,7.2.4,2024-01-09,f7b1d0287d62,101.45,69.45,108.15,101.45,measured settled
+set-k16-v16,string,"16 B key, 16 B value",32,8.0,2024-07-31,4b8de6b1be24,93.45,61.45,100.15,93.45,measured settled
+set-k16-v16,string,"16 B key, 16 B value",32,8.1,2025-02-13,c5ae37f223cc,70.93,38.93,70.93,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16,string,"16 B key, 16 B value",32,9.0,2025-08-12,6c2e4f955310,70.92,38.92,70.92,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16,string,"16 B key, 16 B value",32,9.1,2026-03-11,8051de740dd3,62.92,30.92,62.92,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16,string,"16 B key, 16 B value",32,9.2,2026-09-16,23c73ab6f206,62.94,30.94,62.92,62.94,measured settled
+set-k16-v16-expire,string+TTL,"16 B key, 16 B value, TTL",32,7.2.4,2024-01-09,f7b1d0287d62,138.87,106.87,145.57,138.87,measured settled
+set-k16-v16-expire,string+TTL,"16 B key, 16 B value, TTL",32,8.0,2024-07-31,4b8de6b1be24,130.87,98.87,137.57,130.87,measured settled
+set-k16-v16-expire,string+TTL,"16 B key, 16 B value, TTL",32,8.1,2025-02-13,c5ae37f223cc,93.83,61.83,93.83,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16-expire,string+TTL,"16 B key, 16 B value, TTL",32,9.0,2025-08-12,6c2e4f955310,93.84,61.84,93.84,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16-expire,string+TTL,"16 B key, 16 B value, TTL",32,9.1,2026-03-11,8051de740dd3,85.83,53.83,85.83,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+set-k16-v16-expire,string+TTL,"16 B key, 16 B value, TTL",32,9.2,2026-09-16,23c73ab6f206,85.83,53.83,85.83,,"loaded, hashtable era (settles during load; 9.2 measured 0 passes)"
+hset-f64-v64,hash,"64 B field, 64 B value",128,7.2.4,2024-01-09,f7b1d0287d62,197.45,69.45,204.35,197.45,measured settled
+hset-f64-v64,hash,"64 B field, 64 B value",128,8.0,2024-07-31,4b8de6b1be24,197.45,69.45,204.38,197.45,measured settled
+hset-f64-v64,hash,"64 B field, 64 B value",128,8.1,2025-02-13,c5ae37f223cc,190.93,62.93,191.12,190.93,measured settled
+hset-f64-v64,hash,"64 B field, 64 B value",128,9.0,2025-08-12,6c2e4f955310,174.92,46.92,175.12,174.92,measured settled
+hset-f64-v64,hash,"64 B field, 64 B value",128,9.1,2026-03-11,6c329dfe2c02,174.93,46.93,175.13,174.93,measured settled
+hset-f64-v64,hash,"64 B field, 64 B value",128,9.2,2026-09-16,23c73ab6f206,174.93,46.93,175.17,174.93,measured settled
+hset-f16-v16,hash,"16 B field, 16 B value",32,7.2.4,2024-01-09,f7b1d0287d62,85.45,53.45,92.15,85.45,measured settled
+hset-f16-v16,hash,"16 B field, 16 B value",32,8.0,2024-07-31,4b8de6b1be24,85.45,53.45,92.15,85.45,measured settled
+hset-f16-v16,hash,"16 B field, 16 B value",32,8.1,2025-02-13,c5ae37f223cc,78.93,46.93,78.92,78.93,measured settled
+hset-f16-v16,hash,"16 B field, 16 B value",32,9.0,2025-08-12,6c2e4f955310,54.93,22.93,54.92,54.93,measured settled
+hset-f16-v16,hash,"16 B field, 16 B value",32,9.1,2026-03-11,6c329dfe2c02,54.92,22.92,54.92,54.92,measured settled
+hset-f16-v16,hash,"16 B field, 16 B value",32,9.2,2026-09-16,23c73ab6f206,54.94,22.94,54.92,54.94,measured settled
+sadd-m20,set,20 B member,20,7.2.4,2024-01-09,f7b1d0287d62,41.39,21.39,49.07,41.39,measured settled
+sadd-m20,set,20 B member,20,8.0,2024-07-31,4b8de6b1be24,41.4,21.4,49.77,41.4,measured settled
+sadd-m20,set,20 B member,20,8.1,2025-02-13,c5ae37f223cc,38.93,18.93,39.12,38.93,measured settled
+sadd-m20,set,20 B member,20,9.0,2025-08-12,6c2e4f955310,38.92,18.92,39.12,38.92,measured settled
+sadd-m20,set,20 B member,20,9.1,2026-03-11,6c329dfe2c02,38.92,18.92,39.13,38.92,measured settled
+sadd-m20,set,20 B member,20,9.2,2026-09-16,23c73ab6f206,38.93,18.93,39.18,38.93,measured settled
+zadd-m20,sorted set,20 B member + 8 B score,28,7.2.4,2024-01-09,f7b1d0287d62,107.28,79.28,114.19,107.28,measured settled
+zadd-m20,sorted set,20 B member + 8 B score,28,8.0,2024-07-31,4b8de6b1be24,107.28,79.28,114.22,107.28,measured settled
+zadd-m20,sorted set,20 B member + 8 B score,28,8.1,2025-02-13,c5ae37f223cc,84.76,56.76,84.95,84.76,measured settled
+zadd-m20,sorted set,20 B member + 8 B score,28,9.0,2025-08-12,6c2e4f955310,84.76,56.76,84.97,84.76,measured settled
+zadd-m20,sorted set,20 B member + 8 B score,28,9.1,2026-03-11,6c329dfe2c02,78.28,50.28,78.48,78.28,measured settled
+zadd-m20,sorted set,20 B member + 8 B score,28,9.2,2026-09-16,23c73ab6f206,60.05,32.05,60.3,60.05,measured settled
