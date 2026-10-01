@@ -6,4 +6,4 @@
 pymupdf<1.25
 pillow
 cairosvg
-fieldday @ git+https://github.com/valkey-rainfall/fieldday.git@b92b4ace4407ec25a0dea7683c3147ee2d206ec0
+fieldday @ git+https://github.com/valkey-rainfall/fieldday.git@51edd1f97f7cd6dde4096b6a5c52e61431232a47
