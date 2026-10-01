@@ -13,10 +13,15 @@ F = fullscreen; B = black screen toggle; hold T = elapsed time + slide n/N (ambe
 Sound and picture come from one clock (the page's own), so nothing has to be lined up and the vamp loops
 with no seam: it is generated, not played back.
 """
+import base64
 from pathlib import Path
 
 SRC = Path(__file__).parent / 'talk-web' / 'talk.html'
 OUT = Path(__file__).parent / 'prague-deck' / 'index.html'
+# issue #11 item 4: the talk title and speaker name on the sign-on are set in Open Sans SemiBold, the face
+# the body slides use, embedded so the page still needs nothing from disk or network. The VALKEY wordmark
+# stays Helvetica Neue 800: that is the CRT bit, not the brand mark.
+TITLE_FONT = Path(__file__).parent / 'fonts' / 'opensans' / 'OpenSans-SemiBold.ttf'
 html = SRC.read_text()
 
 
@@ -60,6 +65,32 @@ swap('  @keyframes fadein{from{opacity:0}to{opacity:1}}', '''  #ui,#skip,#termba
   #hint{position:fixed;right:18px;bottom:14px;font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.25em;color:#1a2244;transition:opacity .6s}
   .started #hint{opacity:0}
   @keyframes fadein{from{opacity:0}to{opacity:1}}''')
+# sign-on title + name in Open Sans SemiBold (embedded); the wordmark group keeps Helvetica Neue 800
+swap('  .mono{font-family:', "  @font-face{font-family:'Open Sans Deck';font-weight:600;font-style:normal;"
+     "src:url(data:font/ttf;base64," + base64.b64encode(TITLE_FONT.read_bytes()).decode() + ") format('truetype')}\n"
+     "  .titleface{font-family:'Open Sans Deck','Open Sans',Arial,sans-serif;font-weight:600}\n  .mono{font-family:")
+swap('''  <g id="titlegrp" filter="url(#phos)" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="700" fill="#eaf0ff"></g>
+  <g id="tagline" class="mono" filter="url(#phos)">''',
+     '''  <g id="titlegrp" class="titleface" filter="url(#phos)" fill="#eaf0ff"></g>
+  <g id="tagline" class="titleface" filter="url(#phos)">''')
+# the layout measures glyph widths, so it runs once at parse (fallback metrics) and again once the embedded
+# face has loaded; the page is black until the first keypress, so the re-layout is never seen
+swap('''  const MAXW = 760;
+  let fs = 30, lines = [title];
+  if (widthOf(title, fs) > MAXW && N > 1) {''', '''  const MAXW = 760;
+  const tag = document.getElementById('tag'), tcur = document.getElementById('tcur');
+  let fs, lines, nameY;
+  const layout = () => {
+  grp.replaceChildren();
+  fs = 30; lines = [title];
+  if (widthOf(title, fs) > MAXW && N > 1) {''')
+swap('''  const nameY = y0 + (lines.length - 1) * lh + 40;
+  const tag = document.getElementById('tag'), tcur = document.getElementById('tcur');
+  tag.textContent = name; tag.setAttribute('y', nameY.toFixed(1));''', '''  nameY = y0 + (lines.length - 1) * lh + 40;
+  tag.textContent = name; tag.setAttribute('y', nameY.toFixed(1));
+  };
+  layout();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);''')
 # The player shows slides-lite/ (the export with five slides re-typeset), never slides/ (the raw export).
 swap('<div id="ui" class="mono">', '''<script src="slides-lite/slides.js"></script>
 <div id="bline"></div><div id="bwhite"></div>
