@@ -60,7 +60,8 @@ swap('  @keyframes fadein{from{opacity:0}to{opacity:1}}', '''  #ui,#skip,#termba
   #hint{position:fixed;right:18px;bottom:14px;font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.25em;color:#1a2244;transition:opacity .6s}
   .started #hint{opacity:0}
   @keyframes fadein{from{opacity:0}to{opacity:1}}''')
-swap('<div id="ui" class="mono">', '''<script src="slides.js"></script>
+# The player shows slides-lite/ (the export with five slides re-typeset), never slides/ (the raw export).
+swap('<div id="ui" class="mono">', '''<script src="slides-lite/slides.js"></script>
 <div id="bline"></div><div id="bwhite"></div>
 <div id="deck" aria-label="slides"></div><div id="blackout"></div>
 <div id="hint">PRESS SPACE TO BEGIN</div><div id="clock"></div><div id="preload"></div>
@@ -137,10 +138,10 @@ function deckShow(i) {
   DECK.idx = Math.max(0, Math.min(imgs.length - 1, i));
   imgs.forEach((im, k) => im.classList.toggle('cur', k === DECK.idx));
 }
-async function deckLoadSlides() {                   // slides.js (works from file://) or slides.json (served)
+async function deckLoadSlides() {                   // slides-lite/slides.js (file://) or slides-lite/slides.json (served)
   try {
     if (window.SLIDES) DECK.slides = window.SLIDES;
-    else { const r = await fetch('slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
+    else { const r = await fetch('slides-lite/slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
     const d = document.getElementById('deck');
     DECK.decoded = 0;
     // Decode every slide upfront and track completion. deckBridge() waits on
