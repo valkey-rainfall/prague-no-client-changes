@@ -16,9 +16,6 @@ Clicks during the sign-on are ignored until the name has landed, so a nervous th
 
 URL options: `?title=...&name=...&score=fm|launch|turbine|sid` (defaults are the talk's).
 
-Body slides: `index.html` shows `slides-lite/` -- the Google Slides export with five slides re-typeset
-(slide 2 and the section slides 4, 11, 15, 21: Open Sans, periwinkle accent line). Rebuild from a new PDF
-export (Google Slides: File > Download > PDF) with two commands:
-`python3 ../make_slides.py deck.pdf --skip 1` (originals -> `slides/`), then
-`python3 ../makeover/makeover.py` (the five re-typeset slides + originals -> `slides-lite/`).
+Body slides: `index.html` shows `slides/`, rendered by `../build_deck.py` from `../slides.py` (the slide
+list: titles, text, which figure goes where). Edit `slides.py`, run `python3 ../build_deck.py`, reload.
 Keep the first slide's background pure white so the bridge lands on it without a visible cut.

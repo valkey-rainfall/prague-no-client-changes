@@ -91,8 +91,8 @@ swap('''  const nameY = y0 + (lines.length - 1) * lh + 40;
   };
   layout();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);''')
-# The player shows slides-lite/ (the export with five slides re-typeset), never slides/ (the raw export).
-swap('<div id="ui" class="mono">', '''<script src="slides-lite/slides.js"></script>
+# The player shows prague-deck/slides/, which build_deck.py renders from slides.py.
+swap('<div id="ui" class="mono">', '''<script src="slides/slides.js"></script>
 <div id="bline"></div><div id="bwhite"></div>
 <div id="deck" aria-label="slides"></div><div id="blackout"></div>
 <div id="hint">PRESS SPACE TO BEGIN</div><div id="clock"></div><div id="preload"></div>
@@ -169,10 +169,10 @@ function deckShow(i) {
   DECK.idx = Math.max(0, Math.min(imgs.length - 1, i));
   imgs.forEach((im, k) => im.classList.toggle('cur', k === DECK.idx));
 }
-async function deckLoadSlides() {                   // slides-lite/slides.js (file://) or slides-lite/slides.json (served)
+async function deckLoadSlides() {                   // slides/slides.js (file://) or slides/slides.json (served)
   try {
     if (window.SLIDES) DECK.slides = window.SLIDES;
-    else { const r = await fetch('slides-lite/slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
+    else { const r = await fetch('slides/slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
     const d = document.getElementById('deck');
     DECK.decoded = 0;
     // Decode every slide upfront and track completion. deckBridge() waits on
