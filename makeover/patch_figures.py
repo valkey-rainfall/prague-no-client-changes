@@ -1,6 +1,6 @@
 """Swap corrected figures into exported body slides, in place of the figure Google Slides baked in.
 
-Each entry maps a PDF page number to a replacement PNG. The slide's figure rectangle comes from the PDF
+Each entry maps a PDF page number to a replacement figure (PNG, or SVG which is rasterised at the box width). The slide's figure rectangle comes from the PDF
 itself (the page's single image placement), so the new figure lands exactly where the old one was,
 fitted inside that box and centred. Run after make_slides.py, before makeover.py:
 
@@ -29,7 +29,12 @@ for page_no, fig in FIGURES.items():
     k = slide.width / page.rect.width
     box = tuple(round(v * k) for v in (rect.x0, rect.y0, rect.x1, rect.y1))
     bw, bh = box[2] - box[0], box[3] - box[1]
-    new = Image.open(fig).convert('RGBA')
+    if fig.suffix.lower() == '.svg':                        # rasterise at the box width: crisp at native slide resolution
+        import io, cairosvg
+        png = cairosvg.svg2png(url=str(fig), output_width=bw)
+        new = Image.open(io.BytesIO(png)).convert('RGBA')
+    else:
+        new = Image.open(fig).convert('RGBA')
     s = min(bw / new.width, bh / new.height)
     new = new.resize((round(new.width * s), round(new.height * s)), Image.LANCZOS)
     slide.paste((255, 255, 255), box)                      # clear the old figure
