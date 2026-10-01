@@ -14,13 +14,17 @@
 !makeover/makeover.py
 !makeover/patch_figures.py
 !makeover/test_makeover.mjs
-!makeover/figures/
-!makeover/figures/**
+!figures/
+!figures/**
+!requirements.txt
+!build.sh
 !fonts/
 !fonts/**
 !source/
 !source/**
 # scratch inside tracked dirs
+.venv/
+figures/**/__pycache__/
 prague-deck/*.zip
 node_modules/
 __pycache__/

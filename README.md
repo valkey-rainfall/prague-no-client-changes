@@ -22,22 +22,26 @@ the Google Slides page number (`s002.png` = page 2).
 | `source/talk.pdf` | the Google Slides PDF export the slides come from |
 | `make_deck_page.py` | writes `prague-deck/index.html` (intro, bridge, player, key handling) |
 | `make_slides.py` | renders a PDF export to `prague-deck/slides/` at 2560 px (`--skip 1` drops the title page) |
-| `makeover/patch_figures.py` | pastes replacement figures into slides (page -> figure map inside; figures in `makeover/figures/`) |
+| `figures/` | the figure generators (C-struct layouts probed by `fieldday`, pinned in `requirements.txt`) and their output `figures/out/*.svg` |
+| `makeover/patch_figures.py` | pastes figures from `figures/out/` into slides (page -> figure map inside; a page may expand into a click sequence) |
 | `makeover/makeover.py` | renders the 5 re-typeset slides and assembles `slides-lite/` |
 | `mock_slide2.py` | the three slide-2 mockups (A was chosen) |
 | `test_deck.mjs` | headless run-through: drives the page with clicker keys, screenshots each phase |
 | `fonts/opensans/` | Open Sans (OFL) used by the re-typeset slides |
 
-## Rebuild after a new Google Slides export
+## Rebuild (after a new Google Slides export, or a figure change)
 
 ```
-python3 make_slides.py source/talk.pdf --skip 1        # PDF -> prague-deck/slides/
-python3 makeover/patch_figures.py source/talk.pdf       # swap in figures from makeover/figures/ (optional)
-python3 makeover/makeover.py                            # 5 re-typeset slides + originals -> slides-lite/
+python3 -m venv .venv && .venv/bin/pip install --only-binary=:all: -r requirements.txt   # once
+./build.sh                                              # figures/out/ -> slides/ -> figure swap -> slides-lite/
 node test_deck.mjs /tmp/deck-run                        # optional: screenshots of the whole run
 ```
 
-Needs Python 3 with `PyMuPDF` and `Pillow`; the test needs Node with `playwright`.
+`build.sh` runs, in order: `figures/build.sh` (generators -> `figures/out/*.svg`), `make_slides.py`
+(PDF -> `prague-deck/slides/`), `makeover/patch_figures.py` (SVGs into the slides, rasterised at the
+slide's box width), `makeover/makeover.py` (5 re-typeset slides + the rest -> `slides-lite/`).
+Needs a C compiler on PATH (`fieldday` compiles a tiny program per struct to read `offsetof()`); the
+test needs Node >= 20 with `playwright`.
 Keep the first body slide's background pure white so the bridge lands on it with no visible cut.
 
 ## Style
