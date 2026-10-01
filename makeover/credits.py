@@ -52,19 +52,22 @@ ROWS = [
      ['Rain Valentine', 'Abhishek Kumar'], ['Eran Ifrah', 'Jim Brunner', 'Ran Shidlansik']),
 ]
 
-# design-unit geometry
-X0, X1 = 120, 1800                      # the makeover frame's side margins
-TABLE_TOP = 200                         # under the header
-COLS = [('Release', 125), ('PR', 200), ('Change', 365), ('Authors', 480), ('Reviewers', 510)]
+# design-unit geometry. PEOPLE_FIRST drops the Change column (the PR numbers already appeared on the
+# figure slides and Rain says the change aloud) and spends the width on names and avatars.
+PEOPLE_FIRST = True
+X0, X1 = (80, 1840) if PEOPLE_FIRST else (120, 1800)     # side margins (the frame's are 120)
+TABLE_TOP = 185                         # under the header
+if PEOPLE_FIRST:
+    COLS = [('Release', 140), ('PR', 260), ('Authors', 660), ('Reviewers', 700)]
+    BODY, NUM, AVATAR, TEXT_LINE_H = 30, 27, 46, 40
+else:
+    COLS = [('Release', 125), ('PR', 200), ('Change', 365), ('Authors', 480), ('Reviewers', 510)]
+    BODY, NUM, AVATAR, TEXT_LINE_H = 25, 23, 36, 33
 assert sum(w for _, w in COLS) == X1 - X0
 PAD_X = 12                              # cell text inset
-BODY = 25                               # Open Sans Regular, prose + names
-NUM = 23                                # Fira Mono, release + PR numbers (mono looks larger at equal size)
 HEAD = 19                               # column labels, SemiBold, tracked, muted
-AVATAR = 36
-CHIP_GAP_X, CHIP_GAP_Y = 22, 10
-TEXT_LINE_H = 33
-CELL_PAD_Y = 14
+CHIP_GAP_X, CHIP_GAP_Y = 24, 8
+CELL_PAD_Y = 12
 
 f_body, f_name, f_num, f_head = sans('Regular', BODY), sans('Regular', BODY), mono('Regular', NUM), sans('SemiBold', HEAD)
 # Open Sans has no U+2192; borrow the arrow from DejaVu Sans at the same size (as makeover.py does)
@@ -124,10 +127,11 @@ def draw_text(d, x, y, s, font, fill):
 def row_plan(row):
     rel, prs, change, authors, reviewers = row
     inner = [w - 2 * PAD_X for _, w in COLS]
+    ca, cr = (2, 3) if PEOPLE_FIRST else (3, 4)
     pr_l = wrap(prs, inner[1], f_num, sep=', ')
-    ch_l = wrap(change.split(' '), inner[2], f_body)
-    a_l = layout_chips(authors, inner[3])
-    r_l = layout_chips(reviewers, inner[4])
+    ch_l = [] if PEOPLE_FIRST else wrap(change.split(' '), inner[2], f_body)
+    a_l = layout_chips(authors, inner[ca])
+    r_l = layout_chips(reviewers, inner[cr])
     h_text = max(len(pr_l), len(ch_l)) * TEXT_LINE_H
     h_chip = max(len(a_l), len(r_l)) * (AVATAR + CHIP_GAP_Y) - CHIP_GAP_Y
     return pr_l, ch_l, a_l, r_l, max(h_text, h_chip) + 2 * CELL_PAD_Y
@@ -135,7 +139,7 @@ def row_plan(row):
 
 def render():
     im = Image.new('RGB', (W, H), 'white'); d = ImageDraw.Draw(im)
-    d.text((P(120), P(84)), 'Thank you', font=sans('SemiBold', 54), fill=INK)
+    d.text((P(X0), P(84)), 'Thank you', font=sans('SemiBold', 54), fill=INK)
     plans = [row_plan(r) for r in ROWS]
     head_h = 44
     total = head_h + sum(p[-1] for p in plans)
@@ -158,8 +162,9 @@ def render():
                 draw_text(d, xs[col] + PAD_X, y0 + (i + 0.5) * TEXT_LINE_H, ln, font, fill)
         block([rel], 0, f_num, GREY)
         block(pr_l, 1, f_num, INK)
-        block(ch_l, 2, f_body, INK)
-        for col, lines in ((3, a_l), (4, r_l)):
+        if not PEOPLE_FIRST:
+            block(ch_l, 2, f_body, INK)
+        for col, lines in (((2, a_l), (3, r_l)) if PEOPLE_FIRST else ((3, a_l), (4, r_l))):
             y0 = y + h / 2 - (len(lines) * (AVATAR + CHIP_GAP_Y) - CHIP_GAP_Y) / 2
             for i, ln in enumerate(lines):
                 x = xs[col] + PAD_X; yy = y0 + i * (AVATAR + CHIP_GAP_Y)
