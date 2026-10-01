@@ -61,7 +61,8 @@ and a Chromium it can launch.
 2. Add or change the page -> file line in `FIGURES` in `makeover/patch_figures.py`. The script reads the
    figure rectangle from the PDF page, so the new figure lands exactly where Google Slides put the old one.
    It asserts the page has exactly one baked image; a page with text on it needs a different approach.
-   A page may map to a LIST of figures (it becomes one slide per figure, `s012a.png`, `s012b.png`, ...,
+   `BOX` overrides the baked rectangle with the whole slide minus a margin fraction (page 12 uses 0.025:
+   a 2-4% safe zone survives projector overscan; 0 reads as cropped). A page may map to a LIST of figures (it becomes one slide per figure, `s012a.png`, `s012b.png`, ...,
    a step sequence drawn in the figure) or to `None` (dropped). The script then rewrites
    `prague-deck/slides.json` / `slides.js`, so the count can differ from the PDF's page count.
 3. Run the pipeline from step 2 down, open `prague-deck/slides-lite/sNNN.png` and look at it. Keep the

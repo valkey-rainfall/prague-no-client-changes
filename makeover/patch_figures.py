@@ -30,6 +30,9 @@ FIGURES = {12: CHAIN,                                        # the collision-cha
                                                              # it covers what pages 12 and 13 showed, so 13 goes
            16: OUT / 'fig-fb-1-skiplist-topology.svg',       # explicit arrowheads (librsvg mis-orients <marker>)
            17: OUT / 'fig-fb-2-fbtree-topology.svg'}
+BOX = {12: 0.025}    # page -> margin as a fraction of the slide: the figure box is the whole slide minus that
+                     # margin instead of the rectangle Google Slides baked (which left ~11% dead on each side of
+                     # page 12). A 2-4% safe zone survives projector overscan; 0 reads as cropped.
 TRIM = {16, 17}      # crop the figure's own whitespace margin before fitting, so it fills the box like the
                      # export did. NOT for the chain frames: their shared canvas is what keeps every
                      # object in place from one click to the next.
@@ -92,7 +95,12 @@ for page_no, fig in FIGURES.items():
         continue
     page = pdf[page_no - 1]
     slide = Image.open(slide_path).convert('RGB')
-    box = figure_box(page, slide)
+    if page_no in BOX:
+        m = BOX[page_no]
+        box = (round(slide.width * m), round(slide.height * m), round(slide.width * (1 - m)), round(slide.height * (1 - m)))
+        slide.paste((255, 255, 255), figure_box(page, slide))    # still clear the baked figure
+    else:
+        box = figure_box(page, slide)
     if isinstance(fig, list):
         for i, f in enumerate(fig):
             out, s = patched(slide, box, f)
