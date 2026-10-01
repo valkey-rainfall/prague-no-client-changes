@@ -21,11 +21,13 @@ on:
     branches: [main]
     paths:
       - 'prague-deck/**'
+      - '.github/workflows/package-deck.yml'
     tags:
       - 'v*'
   pull_request:
     paths:
       - 'prague-deck/**'
+      - '.github/workflows/package-deck.yml'
   workflow_dispatch:
     inputs:
       tag:
@@ -34,6 +36,8 @@ on:
 
 permissions:
   contents: write   # needed to create a Release and upload the asset
+  pages: write      # deploy the deck to GitHub Pages
+  id-token: write   # OIDC token the Pages deploy action requires
 
 concurrency:
   group: package-deck-${{ github.ref }}
@@ -98,3 +102,24 @@ jobs:
               --target "$GITHUB_SHA"
           fi
           gh release upload "$TAG" "$ZIP" --clobber
+
+  pages:
+    # Publish the deck to GitHub Pages on pushes to main (not PRs/tags).
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload prague-deck/ as the Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Publish only the deck folder, so the site root IS the deck
+          # (index.html at the Pages URL root) and the rest of the repo is not served.
+          path: prague-deck
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+
