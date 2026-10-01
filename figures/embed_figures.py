@@ -627,7 +627,7 @@ def build_all(outdir: pathlib.Path):
     a = bar(robj_after(16, 64), "robjAfter", ROBJ_AFTER_ROLES)
     out["fig-embed-5-embstr-threshold.svg"] = pair_figure(
         "Medium string: the embedding limit rises from 64 to 128 B",
-        "Valkey 9.2, PR 3397 \u2014 16-byte key, 64-byte value",
+        "Valkey 9.1, PR 3397 \u2014 16-byte key, 64-byte value",
         b, p, "val_ptr", a,
         "At 95 B the object is over the old 64 B embedding limit, so the value lives in its own allocation behind a pointer.",
         "Under the new 128 B limit the same object is embedded: one allocation, no pointer. The limit counts the whole object, not just the value.",

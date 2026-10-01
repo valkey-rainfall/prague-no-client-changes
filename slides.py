@@ -38,7 +38,7 @@ SLIDES = [
     figure('006', 'fig-embed-2-hash-value.svg',       title='Hash entry',                       box=EMBED),  # PR 1579  9.0
     figure('007', 'fig-embed-3-zset-member.svg',      title='Sorted set: skiplist node',        box=EMBED),  # PR 2508  9.1
     figure('008', 'fig-embed-4-embstr-ptr.svg',       title='String object',                    box=EMBED),  # PR 2516  9.1
-    figure('009', 'fig-embed-5-embstr-threshold.svg', title='Raised string embedding threshold', box=EMBED),  # PR 3397  9.2
+    figure('009', 'fig-embed-5-embstr-threshold.svg', title='Raised string embedding threshold', box=EMBED),  # PR 3397  9.1 (merged to the 9.1 branch 2026-04-07, in 9.1.0-rc2 and 9.1.0)
     figure('010', 'chart-overhead-2x2_step1_embedding.svg', box=CHART),
 
     # ---- Part 2: dict -> hashtable --------------------------------------------------------------------------
