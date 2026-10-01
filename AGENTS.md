@@ -25,6 +25,7 @@ keep it true; edit it when the contract changes.
 |---|---|---|
 | intro, bridge, slide player, key handling | Rimuru | `make_deck_page.py` -> `prague-deck/index.html` |
 | the five re-typeset slides (2, 4, 11, 15, 21) | Rimuru | `makeover/makeover.py` -> `prague-deck/slides-lite/` |
+| the credits slide (22), re-typeset | Ranma | `makeover/credits.py` + `makeover/avatars/`, called from `makeover.py` |
 | figures and charts inside the body slides | Ranma | `figures/` (generators, `lib/fdbars.py`, `data/*.csv`, `out/*.svg`), the `FIGURES` map in `makeover/patch_figures.py` |
 | slide content and order | Rain (Google Slides) | `source/talk.pdf` is her export; replace it, never edit it |
 

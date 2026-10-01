@@ -17,6 +17,9 @@
 !makeover/makeover.py
 !makeover/patch_figures.py
 !makeover/test_makeover.mjs
+!makeover/credits.py
+!makeover/avatars/
+!makeover/avatars/**
 !figures/
 !figures/**
 !requirements.txt

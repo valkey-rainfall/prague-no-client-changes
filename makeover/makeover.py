@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 LITE = '--full' not in sys.argv
-LITE_KEEP = {'002', '004', '011', '015', '021'}
+LITE_KEEP = {'002', '004', '011', '015', '021', '022'}   # 022: credits, re-typeset in credits.py
 
 HERE = Path(__file__).parent
 SRC = HERE / 'src'
@@ -226,8 +226,9 @@ chart('020', 'p20_x149.png', 'Overhead per key: B+ tree', 'Skiplist → B+ Tree'
 # ---- 21: The Future ----------------------------------------------------------------------------------
 section('021', None, 'The Future', None, None)
 
-# ---- 22: credits, untouched --------------------------------------------------------------------------
-im = Image.open(DECK / 'slides/s022.png').convert('RGB'); names.append(save(im, '022'))
+# ---- 22: credits, re-typeset (makeover/credits.py; Ranma crossed into the re-typeset set for this, 2026-10-01)
+from credits import render as render_credits   # noqa: E402
+names.append(save(render_credits(), '022'))
 
 if LITE:
     # Slide order follows the original export; only LITE_KEEP come from the renders above.
