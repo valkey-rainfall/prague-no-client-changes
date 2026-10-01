@@ -20,4 +20,5 @@ mv "$OUT/fig2-fbtree-topology.svg"   "$OUT/fig-fb-2-fbtree-topology.svg"
 mv "$OUT/fig7a-lookup-fetches-nostrip.svg" "$OUT/fig-fb-6b-lookup-reads-short.svg"   # the deck's page 19
 rm -f "$OUT"/fig7a-lookup-fetches*.svg                  # with-strip and animated variants: not in the deck
 rm -f "$OUT"/captions.md "$OUT"/fig-ht-1-path-3.svg   # captions live in the talk workspace; the 3-row capstone is not in the deck
+"$PY" "$HERE/credits.py" >/dev/null                        # -> assets/credits.png (slide s022)
 ls "$OUT" | wc -l

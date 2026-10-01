@@ -27,7 +27,7 @@ keep it true; edit it when the contract changes.
 | slide list, order and every word on a slide | Rain | `slides.py` (she edits it, or tells one of us what to change) |
 | the slide renderer | Rimuru | `build_deck.py` -> `prague-deck/slides/` |
 | figures and charts | Ranma | `figures/` (generators, `lib/fdbars.py`, `data/*.csv`, `out/*.svg`); the `figure(...)` lines in `slides.py` that place them |
-| credits table | Rain | `assets/credits.png` (a finished 2560x1440 PNG, used as is) |
+| credits table | Ranma (rows: Rain) | `figures/credits.py` + `figures/avatars/` -> `assets/credits.png`, placed by `static('022', ...)` |
 | PowerPoint export | Rimuru | `export_pptx.py` -> `prague-deck.pptx` (release asset, not committed) |
 
 **`slides.py` is the deck.** There is no Google Slides deck behind it any more; `source/talk.pdf` is the last
