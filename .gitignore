@@ -4,6 +4,8 @@
 !.gitignore
 !README.md
 !AGENTS.md
+!.github/
+!.github/**
 !prague-deck/
 !prague-deck/**
 !make_deck_page.py
