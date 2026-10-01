@@ -56,14 +56,18 @@ Needs Python 3 with `PyMuPDF`, `Pillow`, `cairosvg` (for SVG figures); the test 
 2. Add or change the page -> file line in `FIGURES` in `makeover/patch_figures.py`. The script reads the
    figure rectangle from the PDF page, so the new figure lands exactly where Google Slides put the old one.
    It asserts the page has exactly one baked image; a page with text on it needs a different approach.
+   A page may map to a LIST of figures (it becomes one slide per figure, `s012a.png`, `s012b.png`, ...,
+   a step sequence drawn in the figure) or to `None` (dropped). The script then rewrites
+   `prague-deck/slides.json` / `slides.js`, so the count can differ from the PDF's page count.
 3. Run the pipeline from step 2 down, open `prague-deck/slides-lite/sNNN.png` and look at it. Keep the
    figure grammar the deck already uses: orange pointers, grey overhead, blue user data, DejaVu Mono labels.
 4. Commit `makeover/figures/*`, `patch_figures.py` and the regenerated PNGs together.
 
 ## Checking your work
 
-- `node test_deck.mjs <dir>` must list 21 slides and the last screenshot must be the first body slide
-  landing after the white-out. If a slide count changes, `prague-deck/slides-lite/slides.js` is wrong.
+- `node test_deck.mjs <dir>` must list every slide in `prague-deck/slides.js` (26 since the chain sequence
+  replaced pages 12-13) and the last screenshot must be the first body slide landing after the white-out.
+  If the count disagrees with `slides.js`, the lists are stale: rerun from `patch_figures.py` down.
 - The deck opens from `file://` with no network. Anything that needs a server, a CDN or a font download
   is a regression; the venue wifi is not part of the design.
 - Open Sans is vendored in `fonts/opensans/` (OFL). Scripts look there first, then

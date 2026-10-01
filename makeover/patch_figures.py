@@ -1,13 +1,21 @@
 """Swap corrected figures into exported body slides, in place of the figure Google Slides baked in.
 
-Each entry maps a PDF page number to a replacement figure (PNG, or SVG which is rasterised at the box width). The slide's figure rectangle comes from the PDF
-itself (the page's single image placement), so the new figure lands exactly where the old one was,
-fitted inside that box and centred. Run after make_slides.py, before makeover.py:
+Each entry maps a PDF page number to a replacement figure (PNG, or SVG which is rasterised at the box
+width). The slide's figure rectangle comes from the PDF itself (the page's single image placement), so
+the new figure lands exactly where the old one was, fitted inside that box and centred.
+
+A page may also map to a LIST of figures: the page becomes one slide per figure, named s012a.png,
+s012b.png, ... so they sort into the page's place (a build-up or a step sequence drawn in the figure
+itself), and the original sNNN.png is removed. A page mapped to None is dropped. The slide lists
+(prague-deck/slides.json, slides.js) are rewritten from the slides/ folder afterwards, since
+make_slides.py wrote them before this ran. Run after make_slides.py, before makeover.py:
 
     python3 make_slides.py deck.pdf --skip 1
     python3 makeover/patch_figures.py deck.pdf
     python3 makeover/makeover.py
 """
+import io
+import json
 import sys
 from pathlib import Path
 import fitz
@@ -15,30 +23,73 @@ from PIL import Image
 
 HERE = Path(__file__).parent
 DECK = HERE.parent / 'prague-deck'
-FIGURES = {16: HERE / 'figures/p16-skiplist.png',          # Ranma's arrowhead fix, 2026-10-01
-           17: HERE / 'figures/p17-small-fbtree.png'}
+F = HERE / 'figures'
+CHAIN = [F / f'p12-chain-{t}.svg' for t in ('a1', 'a2', 'a', 'b', 'c', 'd', 'e')]
+FIGURES = {12: CHAIN,                                        # Ranma's collision-chain sequence, 2026-10-01:
+           13: None,                                         # 7.2 -> 8.0 -> (key, expiry into the object) -> 8.1;
+                                                             # it covers what pages 12 and 13 showed, so 13 goes
+           16: F / 'p16-skiplist.png',                       # Ranma's arrowhead fix, 2026-10-01
+           17: F / 'p17-small-fbtree.png'}
+
+
+def figure_box(page, slide):
+    imgs = page.get_images(full=True)
+    assert len(imgs) == 1, f'page {page.number + 1}: expected one baked figure, found {len(imgs)}'
+    rect = page.get_image_rects(imgs[0][0])[0]
+    k = slide.width / page.rect.width
+    return tuple(round(v * k) for v in (rect.x0, rect.y0, rect.x1, rect.y1))
+
+
+MONO = 'DejaVu Sans Mono'                                    # cairosvg does not resolve a generic 'monospace'; pin the deck's label font
+
+
+def load_figure(fig, bw):
+    if fig.suffix.lower() == '.svg':                        # rasterise at the box width: crisp at native slide resolution
+        import re
+        import cairosvg
+        svg = re.sub(r'font-family="[^"]*"', f'font-family="{MONO}"', fig.read_text())
+        png = cairosvg.svg2png(bytestring=svg.encode(), output_width=bw)
+        return Image.open(io.BytesIO(png)).convert('RGBA')
+    return Image.open(fig).convert('RGBA')
+
+
+def patched(slide, box, fig):
+    bw, bh = box[2] - box[0], box[3] - box[1]
+    new = load_figure(fig, bw)
+    s = min(bw / new.width, bh / new.height)
+    new = new.resize((round(new.width * s), round(new.height * s)), Image.LANCZOS)
+    out = slide.copy()
+    out.paste((255, 255, 255), box)                         # clear the old figure
+    x = box[0] + (bw - new.width) // 2
+    y = box[1] + (bh - new.height) // 2
+    out.paste(new, (x, y), new)
+    return out, s
+
 
 pdf = fitz.open(sys.argv[1])
 for page_no, fig in FIGURES.items():
-    page = pdf[page_no - 1]
-    imgs = page.get_images(full=True)
-    assert len(imgs) == 1, f'page {page_no}: expected one baked figure, found {len(imgs)}'
-    rect = page.get_image_rects(imgs[0][0])[0]
     slide_path = DECK / f'slides/s{page_no:03d}.png'
+    if fig is None:
+        if slide_path.exists():
+            slide_path.unlink()
+        print(f's{page_no:03d}: dropped')
+        continue
+    page = pdf[page_no - 1]
     slide = Image.open(slide_path).convert('RGB')
-    k = slide.width / page.rect.width
-    box = tuple(round(v * k) for v in (rect.x0, rect.y0, rect.x1, rect.y1))
-    bw, bh = box[2] - box[0], box[3] - box[1]
-    if fig.suffix.lower() == '.svg':                        # rasterise at the box width: crisp at native slide resolution
-        import io, cairosvg
-        png = cairosvg.svg2png(url=str(fig), output_width=bw)
-        new = Image.open(io.BytesIO(png)).convert('RGBA')
+    box = figure_box(page, slide)
+    if isinstance(fig, list):
+        for i, f in enumerate(fig):
+            out, s = patched(slide, box, f)
+            name = f's{page_no:03d}{chr(ord("a") + i)}.png'
+            out.save(DECK / 'slides' / name)
+            print(f'{name[:-4]}: {f.name} -> box {box}, scaled x{s:.2f}')
+        slide_path.unlink()
     else:
-        new = Image.open(fig).convert('RGBA')
-    s = min(bw / new.width, bh / new.height)
-    new = new.resize((round(new.width * s), round(new.height * s)), Image.LANCZOS)
-    slide.paste((255, 255, 255), box)                      # clear the old figure
-    x = box[0] + (bw - new.width) // 2; y = box[1] + (bh - new.height) // 2
-    slide.paste(new, (x, y), new)
-    slide.save(slide_path)
-    print(f's{page_no:03d}: {fig.name} -> box {box}, scaled x{s:.2f}')
+        out, s = patched(slide, box, fig)
+        out.save(slide_path)
+        print(f's{page_no:03d}: {fig.name} -> box {box}, scaled x{s:.2f}')
+
+names = [f'slides/{p.name}' for p in sorted((DECK / 'slides').glob('s*.png'))]
+(DECK / 'slides.json').write_text(json.dumps(names, indent=1))
+(DECK / 'slides.js').write_text('window.SLIDES = ' + json.dumps(names) + ';\n')
+print(f'{len(names)} slides -> {DECK / "slides.json"}')
