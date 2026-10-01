@@ -1,0 +1,25 @@
+# Allowlist: only the web deck, its builders, fonts and the slide source are tracked.
+# Everything else in this folder (PPTX decks, rendered videos, frame dumps, previews) is scratch.
+*
+!.gitignore
+!README.md
+!prague-deck/
+!prague-deck/**
+!make_deck_page.py
+!make_slides.py
+!test_deck.mjs
+!mock_slide2.py
+!makeover/
+!makeover/makeover.py
+!makeover/patch_figures.py
+!makeover/test_makeover.mjs
+!makeover/figures/
+!makeover/figures/**
+!fonts/
+!fonts/**
+!source/
+!source/**
+# scratch inside tracked dirs
+prague-deck/*.zip
+node_modules/
+__pycache__/
