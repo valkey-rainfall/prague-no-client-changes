@@ -55,13 +55,15 @@ swap('  @keyframes fadein{from{opacity:0}to{opacity:1}}', '''  #ui,#skip,#termba
   #blackout{position:fixed;inset:0;background:#000;display:none;z-index:9} body.black #blackout{display:block}
   #clock{position:fixed;right:22px;bottom:16px;font:600 22px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#555;background:rgba(255,255,255,.92);padding:8px 12px;border-radius:6px;display:none;z-index:8}
   #clock.show{display:block} #clock.late{color:#b42318} #clock.amber{color:#9a6700}
+  #preload{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);font:400 15px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa;display:none;z-index:9}
+  #preload.show{display:block}
   #hint{position:fixed;right:18px;bottom:14px;font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.25em;color:#1a2244;transition:opacity .6s}
   .started #hint{opacity:0}
   @keyframes fadein{from{opacity:0}to{opacity:1}}''')
 swap('<div id="ui" class="mono">', '''<script src="slides.js"></script>
 <div id="bline"></div><div id="bwhite"></div>
 <div id="deck" aria-label="slides"></div><div id="blackout"></div>
-<div id="hint">PRESS SPACE TO BEGIN</div><div id="clock"></div>
+<div id="hint">PRESS SPACE TO BEGIN</div><div id="clock"></div><div id="preload"></div>
 <div id="ui" class="mono">''')
 
 # the deck controller
@@ -111,7 +113,24 @@ function deckBridge() {
   setTimeout(() => { line.style.height = '7px'; }, 263);
   setTimeout(() => { line.style.height = '5px'; }, 297);
   setTimeout(() => { line.style.opacity = 0; white.classList.add('open'); }, 330);
-  setTimeout(() => { document.body.classList.add('deck'); DECK.step = 'body'; deckShow(0); }, 700);
+  // Land on the white bridge, then enter the body ONLY once every slide has
+  // decoded (DECK.ready). On file:// / a warm cache this resolves before the
+  // 700ms bridge animation finishes, so entry is unchanged; on a cold Pages
+  // load it holds on the white screen (seamless -- slide backgrounds are white
+  // too) rather than advancing into a half-fetched slide. A tiny counter shows
+  // only if the hold is actually visible.
+  setTimeout(() => {
+    const hold = setTimeout(() => {
+      const n = DECK.slides ? DECK.slides.length : 0;
+      const el = document.getElementById('preload');
+      if (el) { el.textContent = `loading ${DECK.decoded || 0}/${n}`; el.classList.add('show'); }
+    }, 120);
+    Promise.resolve(DECK.ready).then(() => {
+      clearTimeout(hold);
+      const el = document.getElementById('preload'); if (el) el.classList.remove('show');
+      document.body.classList.add('deck'); DECK.step = 'body'; deckShow(0);
+    });
+  }, 700);
 }
 function deckShow(i) {
   const imgs = document.querySelectorAll('#deck img'); if (!imgs.length) { DECK.idx = -1; return; }
@@ -123,7 +142,16 @@ async function deckLoadSlides() {                   // slides.js (works from fil
     if (window.SLIDES) DECK.slides = window.SLIDES;
     else { const r = await fetch('slides.json'); if (!r.ok) return; DECK.slides = await r.json(); }
     const d = document.getElementById('deck');
-    DECK.slides.forEach(s => { const im = document.createElement('img'); im.src = s; im.decoding = 'sync'; d.appendChild(im); });
+    DECK.decoded = 0;
+    // Decode every slide upfront and track completion. deckBridge() waits on
+    // DECK.ready before showing slide 0, so from a server (Pages) a slow fetch
+    // can never land mid-talk; from file:// decode is instant and this is a
+    // no-op. img.decode() rejects on a genuinely broken image -- count it as
+    // settled so a single bad slide can't wedge the whole deck.
+    DECK.ready = Promise.all(DECK.slides.map(s => {
+      const im = document.createElement('img'); im.src = s; im.decoding = 'sync'; d.appendChild(im);
+      return im.decode().catch(() => {}).then(() => { DECK.decoded++; });
+    }));
   } catch (e) { console.warn('no slides.json', e); }
 }
 function deckNext() {
