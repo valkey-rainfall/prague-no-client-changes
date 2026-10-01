@@ -49,7 +49,7 @@ ROWS = [
      ['chzhoo', 'Viktor Söderqvist'], ['Ran Shidlansik']),
     ('9.1', ['2516'], 'Value pointer dropped from string object',
      ['Rain Valentine'], ['Viktor Söderqvist', 'Jim Brunner', 'Ran Shidlansik', 'Madelyn Olson']),
-    ('9.2', ['3397'], 'Embedding limit 64 \u2192 128 B',
+    ('9.1', ['3397'], 'Embedding limit 64 \u2192 128 B',
      ['Nikhil Manglore'], ['Viktor Söderqvist']),
     ('9.2', ['3579', '3840', '4206', '4359'], 'B+ tree for sorted sets',
      ['Rain Valentine', 'Abhishek Kumar'], ['Eran Ifrah', 'Jim Brunner', 'Ran Shidlansik']),

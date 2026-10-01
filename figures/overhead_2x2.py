@@ -54,7 +54,8 @@ PANELS = [
     ("Sorted Set", [("zset", None)]),
 ]
 C_MAIN = "#1F4E79"
-C_ALT = "#7FA3C7"          # lighter tint of the same blue for the second string line
+C_ALT = "#2A8C7A"          # teal for the with-TTL string line: a different hue, not a tint, so the two lines
+                           # read apart where they touch at 8.0; not orange/magenta, which the deck uses for highlights
 FUTURE = 1.0
 
 from matplotlib import font_manager

@@ -722,7 +722,7 @@ Same as above, plus Valkey 9.1 (PR 2516): the value pointer inside the object go
 (55 → 47 B). Three fetches and three allocations per key (besides the table) in 8.0; two
 fetches and one allocation from 8.1 on. Orange in each row is the pointers a lookup
 follows: two, one, one. Perf aside: every circled number is a trip to memory. For values
-over 44 B the value was a separate allocation until 9.2 (PR 3397, fig 5), which is where
+over 44 B the value was a separate allocation until 9.1 (PR 3397, fig 5), which is where
 the 4 → 3 → 2 version of this slide applies.
 
 ## H4 — Where the hashtable was applied (slide table, no figure)
