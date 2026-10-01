@@ -3,13 +3,12 @@ name: Package deck
 # What this does
 # ---------------
 # * On every push to main / PR touching the deck: run check_deck.py (player wiring,
-#   manifests vs PNGs, lite-set contract, slide size, offline). No artifact is
-#   produced -- this is just a tripwire for a broken commit.
-# * On a version tag (v*) or manual run: build prague-deck-<tag>.zip from the
-#   already-committed deck and attach it to a GitHub Release. The committed PNGs
-#   ARE the deliverable, so CI packages them rather than re-rendering from the
-#   Google Slides PDF (which needs heavy deps and could drift from the
-#   hand-tuned slides).
+#   manifest vs PNGs vs slides.py, every PNG rendered from current inputs, slide
+#   size, offline). No artifact is produced -- this is just a tripwire for a broken commit.
+# * On a version tag (v*) or manual run: build prague-deck-<tag>.zip and .pptx from the
+#   already-committed deck and attach them to a GitHub Release. The committed PNGs
+#   ARE the deliverable, so CI packages them rather than re-rendering (which needs
+#   cairo, fieldday and a C compiler, and would churn glyph antialiasing by host).
 #
 # Release assets live with the repo's releases (permanent until deleted), not in
 # Git history, so they do not grow the clone. Cut a release with:
@@ -85,6 +84,12 @@ jobs:
           echo "ZIP=dist/${name}.zip" >> "$GITHUB_ENV"
           ls -lh "dist/${name}.zip"
 
+      - name: Build the PowerPoint backup (export_pptx.py)
+        run: |
+          python3 -m pip install --quiet python-pptx
+          python3 export_pptx.py "dist/prague-deck-${TAG}.pptx"
+          echo "PPTX=dist/prague-deck-${TAG}.pptx" >> "$GITHUB_ENV"
+
       - name: Create or update the Release and attach the zip
         env:
           GH_TOKEN: ${{ github.token }}
@@ -94,10 +99,10 @@ jobs:
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             gh release create "$TAG" \
               --title "Prague deck $TAG" \
-              --notes "Self-contained web deck. Download the zip, unzip, open prague-deck/index.html from disk (press F, then Space)." \
+              --notes "Self-contained web deck: download the zip, unzip, open prague-deck/index.html from disk (press F, then Space). The .pptx is a still-image backup of the same slides, no sound or intro animation." \
               --target "$GITHUB_SHA"
           fi
-          gh release upload "$TAG" "$ZIP" --clobber
+          gh release upload "$TAG" "$ZIP" "$PPTX" --clobber
 
   pages:
     # Publish the deck to GitHub Pages on pushes to main (not PRs/tags).
