@@ -8,7 +8,7 @@ LIST is the slide order. The ids happen to be the page numbers of the retired Go
 why there is no 13 and why the chain sequence is 012a..012g; renaming them would only churn the PNGs.
 
 Four kinds of slide:
-  headline(id, ...)                 the two big numbers (slide 2)
+  headline(id, cols, footnote, show=None)   the two big numbers (slides 2a/2b): cols = [(label, big)], show = how many columns this frame reveals
   section(id, eyebrow, word, claim, detail)   a section opener: one big word beside the hexagon-corner mark; eyebrow, claim, detail optional (unused today)
   figure(id, svg, title=None, box=..., trim=False, animated=False)   a figure from figures/out/, with an optional title above it
   static(id, png)                   a finished PNG from assets/, used as is (the credits table)
@@ -27,10 +27,10 @@ CHART = (0, 80, 2560, 1360)             # the four charts share one frame so the
 EMBED = (0, 285, 2560, 1320)            # byte-layout figures under a title
 
 SLIDES = [
-    headline('002', 'Upgrading from 7.2 to 9.2', 'Same dataset, same commands, no client changes',
-             cols=[('20%', '16 B keys, 1–128 B values', '43% less overhead: 31 B saved per key'),
-                   ('28%', 'large sorted sets, 10–128 B elements', '54% less overhead: 46 B saved per element')],
-             footnote='Averaged over the size range; every size in the range improves. Results vary with allocator rounding.'),
+    # the two big numbers, revealed one column per click. Spoken: strings = 16 B keys, 1–128 B values, 43% less
+    # overhead (31 B per key); sorted sets = 10–128 B elements, 54% less overhead (46 B per element).
+    headline('002a', cols=[('Strings', '20%'), ('Sorted sets', '28%')], footnote='* averages for 1–128 B items, results vary', show=1),
+    headline('002b', cols=[('Strings', '20%'), ('Sorted sets', '28%')], footnote='* averages for 1–128 B items, results vary'),
     figure('003', 'chart-overhead-2x2.svg', box=CHART),                 # overhead per key, release by release (plain)
 
     # ---- Part 1: embedding ----------------------------------------------------------------------------------
