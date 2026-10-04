@@ -89,6 +89,8 @@ def text(d, xy, s, f, fill=INK, anchor='la', tracking=0):
     t = P(tracking)
     if anchor[0] == 'r':
         x -= text_len(s, f) + t * (len(s) - 1)
+    if anchor[0] == 'm':
+        x -= (text_len(s, f) + t * (len(s) - 1)) / 2
     for c in s:
         cf = arrow_font(f) if c == ARROW else f
         d.text((x, y), c, font=cf, fill=fill, anchor='l' + anchor[1]); x += cf.getlength(c) + t
@@ -152,6 +154,7 @@ def hex_corner(im, cx=1600, cy=700, w_diag=260, w_vert=280, color=LOGO_BLUE):
            f'<polygon points="{" ".join(f"{x:.1f},{y:.1f}" for x, y in pts)}" fill="{color}"/></svg>')
     ov = Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=W))).convert('RGBA')
     im.paste(ov, (0, 0), ov)
+    return cx - w_vert / 2                                    # the vertical leg's left edge: the white panel is [0, this]
 
 
 def ink_bbox(im, pad=12):
@@ -227,11 +230,12 @@ def render(slide):
         d.line([(P(960), P(420)), (P(960), P(900))], fill=RULE, width=P(2))
         text(d, (120, 1010), slide['footnote'], font('Regular', 26), MUTED, 'ls')
     elif k == 'section':
-        hex_corner(im)                                          # the mark first, so the title paints over it if they ever meet
-        if slide['eyebrow']: text(d, (120, 300), slide['eyebrow'].upper(), font('SemiBold', 22), MUTED, tracking=3)
-        text(d, (112, 540), slide['word'], font('Light', 150), INK, 'ls')
-        if slide['claim']: text(d, (120, 650), slide['claim'], font('SemiBold', 44), ACCENT)
-        if slide['detail']: text(d, (120, 725), slide['detail'], font('Regular', 34), GREY)
+        leg = hex_corner(im)                                    # the mark first; the title is centred on the white panel it leaves
+        mid = leg / 2
+        if slide['eyebrow']: text(d, (mid, 300), slide['eyebrow'].upper(), font('SemiBold', 22), MUTED, 'ms', tracking=3)
+        text(d, (mid, 540), slide['word'], font('Light', 150), INK, 'ms')
+        if slide['claim']: text(d, (mid, 650), slide['claim'], font('SemiBold', 44), ACCENT, 'ma')
+        if slide['detail']: text(d, (mid, 725), slide['detail'], font('Regular', 34), GREY, 'ma')
     elif k == 'figure':
         if slide['title']: header(d, slide['title'])
         place_figure(im, slide['svg'], slide['box'], slide['trim'])
