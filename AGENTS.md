@@ -95,7 +95,7 @@ and a Chromium it can launch.
   still), that every PNG's recorded input digest matches the
   current inputs (so an edited `slides.py` or SVG without a rebuild fails, without rendering anything),
   and that every PNG is 2560x1440 (every slide SVG: a 2560x1440 canvas with its fonts embedded).
-- `node test_deck.mjs <dir>` must list every slide in `prague-deck/slides/slides.js` (26 today) and the
+- `node test_deck.mjs <dir>` must list every slide in `prague-deck/slides/slides.js` (27 today) and the
   last screenshot must be the first body slide landing after the white-out.
 - The deck opens from `file://` with no network. Anything that needs a server, a CDN or a font download
   is a regression; the venue wifi is not part of the design.

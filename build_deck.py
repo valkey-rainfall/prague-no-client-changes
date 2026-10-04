@@ -46,7 +46,7 @@ MONO = 'Fira Mono'                         # the figures' label face; cairosvg d
 
 
 # ---- the slide kinds (slides.py calls these; they only record what to draw) ------------------------------------
-def headline(id, title, subtitle, cols, footnote): return dict(id=id, kind='headline', title=title, subtitle=subtitle, cols=cols, footnote=footnote)
+def headline(id, cols, footnote, show=None): return dict(id=id, kind='headline', cols=cols, footnote=footnote, show=show)   # cols: [(label, big)]; show: columns revealed (None = all)
 def section(id, eyebrow, word, claim, detail): return dict(id=id, kind='section', eyebrow=eyebrow, word=word, claim=claim, detail=detail)
 def figure(id, svg, title=None, box=(0, 0, W, H), trim=False, animated=False): return dict(id=id, kind='figure', svg=svg, title=title, box=box, trim=trim, animated=animated)
 def shown_as(slide): return f"s{slide['id']}." + ('svg' if slide.get('animated') else 'png')   # the file the manifest lists for this slide
@@ -221,13 +221,12 @@ def render(slide):
         return im
     im, d = canvas()
     if k == 'headline':
-        header(d, slide['title'], slide['subtitle'])
-        for x, (big, ds, ov) in zip((120, 1000), slide['cols']):
+        shown = slide['cols'][:slide['show']] if slide['show'] else slide['cols']
+        for i, (x, (label, big)) in enumerate(zip((120, 1000), shown)):
+            if i: d.line([(P(960), P(340)), (P(960), P(780))], fill=RULE, width=P(2))   # the divider belongs to the second column
+            text(d, (x + 8, 390), label, font('Regular', 54), INK, 'ls')
             text(d, (x, 640), big, font('Light', 300), INK, 'ls')
             text(d, (x + 8, 715), 'less memory', font('SemiBold', 44), ACCENT)
-            text(d, (x + 8, 790), ds, font('Regular', 34), GREY)
-            text(d, (x + 8, 840), ov, font('Regular', 34), GREY)
-        d.line([(P(960), P(420)), (P(960), P(900))], fill=RULE, width=P(2))
         text(d, (120, 1010), slide['footnote'], font('Regular', 26), MUTED, 'ls')
     elif k == 'section':
         leg = hex_corner(im)                                    # the mark first; the title is centred on the white panel it leaves
