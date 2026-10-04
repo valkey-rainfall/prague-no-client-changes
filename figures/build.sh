@@ -17,8 +17,9 @@ TALK=1 "$PY" "$HERE/area_figure.py" 0.18 1.2 2.0 > "$OUT/fig-fb-4-allocations-to
 "$PY" "$HERE/overhead_2x2.py"      "$OUT" >/dev/null
 mv "$OUT/fig1-skiplist-topology.svg" "$OUT/fig-fb-1-skiplist-topology.svg"
 mv "$OUT/fig2-fbtree-topology.svg"   "$OUT/fig-fb-2-fbtree-topology.svg"
-mv "$OUT/fig7a-lookup-fetches-nostrip.svg" "$OUT/fig-fb-6b-lookup-reads-short.svg"   # the deck's page 19
-rm -f "$OUT"/fig7a-lookup-fetches*.svg                  # with-strip and animated variants: not in the deck
+mv "$OUT/fig7a-lookup-fetches-nostrip.svg"          "$OUT/fig-fb-6b-lookup-reads-short.svg"            # page 19, still
+mv "$OUT/fig7a-lookup-fetches-nostrip-animated.svg" "$OUT/fig-fb-6b-lookup-reads-short-animated.svg"   # page 19 as shown: one compare per 0.45 s, loops
+rm -f "$OUT"/fig7a-lookup-fetches*.svg                  # with-strip variants: not in the deck
 rm -f "$OUT"/captions.md "$OUT"/fig-ht-1-path-3.svg   # captions live in the talk workspace; the 3-row capstone is not in the deck
 "$PY" "$HERE/credits.py" >/dev/null                        # -> assets/credits.png (slide s022)
 ls "$OUT" | wc -l

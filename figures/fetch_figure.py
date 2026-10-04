@@ -427,6 +427,7 @@ if __name__ == "__main__":
     (outdir / "fig7a-lookup-fetches-animated.svg").write_text(fig7a(animated=True))
     if TALK:
         (outdir / "fig7a-lookup-fetches-nostrip.svg").write_text(fig7a(strip=False))
+        (outdir / "fig7a-lookup-fetches-nostrip-animated.svg").write_text(fig7a(animated=True, strip=False))
         (outdir / "fig7a-lookup-fetches-skiplist.svg").write_text(fig7a_panel("skiplist"))
         (outdir / "fig7a-lookup-fetches-fbtree.svg").write_text(fig7a_panel("fbtree"))
     print("wrote fig7a-lookup-fetches.svg fig7a-lookup-fetches-animated.svg", file=sys.stderr)

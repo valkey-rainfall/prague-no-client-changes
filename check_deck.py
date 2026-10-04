@@ -11,13 +11,14 @@ break silently:
            opened bare from disk without ?title= / ?name= parameters.
   offline  index.html references no http(s) resource other than XML namespaces. The venue's
            wifi is not part of the design.
-  manifest slides/slides.json and slides/slides.js agree with each other and with the PNGs on disk:
-           every listed file present, no stray PNG that nothing lists.
+  manifest slides/slides.json and slides/slides.js agree with each other and with the files on disk:
+           every listed file present, every slide's PNG present (an animated slide is listed as its SVG and
+           keeps its PNG still beside it), no stray PNG or SVG that nothing lists.
   spec     the manifest lists exactly the slides in slides.py, in that order. slides.py is the deck.
   current  every committed PNG was rendered from the current inputs: the digest build_deck.py stamped
            into slides/inputs.json equals the digest of the slide's line in slides.py, its SVG/PNG, the
            fonts and the engine. An edit to any of those without a rebuild fails here, without rendering.
-  size     every PNG is 2560x1440.
+  size     every PNG is 2560x1440; every slide SVG declares a 2560x1440 canvas and embeds its fonts.
 
 Exit status is the number of failed checks (0 = clean). Pass -v to print passing checks too.
 """
@@ -86,16 +87,20 @@ def main():
     check('manifest: entries live in slides/', all(r.startswith('slides/') for r in jsn), str(jsn[:2]))
     missing = [r for r in jsn if not (DECK / r).is_file()]
     check('manifest: every listed file exists', not missing, ', '.join(missing[:5]))
+    stills = [r for r in jsn if not (DECK / r).with_suffix('.png').is_file()]
+    check('manifest: every slide has its PNG still (animated slides included)', not stills, ', '.join(stills[:5]))
     on_disk = sorted(p.name for p in d.glob('s*.png'))
-    listed = sorted(Path(r).name for r in jsn)
+    listed = sorted(Path(r).with_suffix('.png').name for r in jsn)
     check('manifest: lists every PNG on disk, no strays', on_disk == listed,
           f'disk-only={sorted(set(on_disk) - set(listed))[:5]} list-only={sorted(set(listed) - set(on_disk))[:5]}')
+    svg_strays = sorted(p.name for p in d.glob('s*.svg') if f'slides/{p.name}' not in jsn)
+    check('manifest: no stray slide SVG', not svg_strays, ', '.join(svg_strays[:5]))
 
     # spec + current: slides.py is the deck; every PNG was rendered from what is committed now
     sys.path.insert(0, str(ROOT))
     import build_deck
     from slides import SLIDES
-    want = [f"slides/s{s['id']}.png" for s in SLIDES]
+    want = [f"slides/{build_deck.shown_as(s)}" for s in SLIDES]
     check('spec: manifest == slides.py, same slides, same order', jsn == want,
           f'manifest-only={sorted(set(jsn) - set(want))[:5]} spec-only={sorted(set(want) - set(jsn))[:5]}')
     stamped = json.loads((d / 'inputs.json').read_text()) if (d / 'inputs.json').is_file() else {}
@@ -106,6 +111,10 @@ def main():
     # size
     wrong = [(str(p.relative_to(DECK)), png_size(p)) for p in DECK.glob('slides/s*.png') if png_size(p) != SLIDE_PX]
     check(f'size: every slide PNG is {SLIDE_PX[0]}x{SLIDE_PX[1]}', not wrong, str(wrong[:5]))
+    canvas = f'width="{SLIDE_PX[0]}" height="{SLIDE_PX[1]}" viewBox="0 0 {SLIDE_PX[0]} {SLIDE_PX[1]}"'
+    bad_svg = [p.name for p in DECK.glob('slides/s*.svg')
+               if canvas not in p.read_text(errors='replace')[:400] or 'data:font/ttf;base64,' not in p.read_text(errors='replace')]
+    check(f'size: every slide SVG is a {SLIDE_PX[0]}x{SLIDE_PX[1]} canvas with embedded fonts', not bad_svg, ', '.join(bad_svg[:5]))
 
     n = len(failures)
     print(f'check_deck: {"OK" if not n else f"{n} check(s) FAILED"}')

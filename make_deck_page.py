@@ -167,7 +167,14 @@ function deckBridge() {
 function deckShow(i) {
   const imgs = document.querySelectorAll('#deck img'); if (!imgs.length) { DECK.idx = -1; return; }
   DECK.idx = Math.max(0, Math.min(imgs.length - 1, i));
-  imgs.forEach((im, k) => im.classList.toggle('cur', k === DECK.idx));
+  imgs.forEach((im, k) => {
+    const cur = k === DECK.idx;
+    // An animated slide is an SVG with CSS @keyframes. Browsers share one timeline per image URL, so a slide
+    // reached mid-cycle (or revisited) would be mid-animation: reload it under a fresh URL at the moment it is
+    // shown, so the animation starts at tick 0. The old image stays on screen until the new one has decoded.
+    if (cur && !im.classList.contains('cur') && /\.svg$/.test(im.dataset.src || '')) im.src = im.dataset.src + '?t=' + Date.now();
+    im.classList.toggle('cur', cur);
+  });
 }
 async function deckLoadSlides() {                   // slides/slides.js (file://) or slides/slides.json (served)
   try {
@@ -181,7 +188,7 @@ async function deckLoadSlides() {                   // slides/slides.js (file://
     // no-op. img.decode() rejects on a genuinely broken image -- count it as
     // settled so a single bad slide can't wedge the whole deck.
     DECK.ready = Promise.all(DECK.slides.map(s => {
-      const im = document.createElement('img'); im.src = s; im.decoding = 'sync'; d.appendChild(im);
+      const im = document.createElement('img'); im.src = s; im.dataset.src = s; im.decoding = 'sync'; d.appendChild(im);
       return im.decode().catch(() => {}).then(() => { DECK.decoded++; });
     }));
   } catch (e) { console.warn('no slides.json', e); }
