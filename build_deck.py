@@ -11,6 +11,11 @@ font, this file); prague-deck/slides/inputs.json records the digests. Two hosts'
 edges differently, so byte-identity across hosts is not a goal; "every committed PNG is current" is, and
 check_deck.py verifies it from the digests without rendering anything.
 
+An animated figure (figure(..., animated=True); the SVG carries CSS @keyframes) is additionally written as
+s<id>.svg: the whole 2560x1440 slide as one SVG with the figure nested at the same fitted box and Fira Mono
+embedded, which is what the manifest lists for that slide and what the player shows (a CSS-animated SVG plays
+inside an <img>; a PNG cannot). The PNG is still rendered, as the still for the PowerPoint export.
+
 usage: build_deck.py            render the slides whose inputs changed
        build_deck.py --all      render every slide
 """
@@ -43,7 +48,8 @@ MONO = 'Fira Mono'                         # the figures' label face; cairosvg d
 # ---- the slide kinds (slides.py calls these; they only record what to draw) ------------------------------------
 def headline(id, title, subtitle, cols, footnote): return dict(id=id, kind='headline', title=title, subtitle=subtitle, cols=cols, footnote=footnote)
 def section(id, eyebrow, word, claim, detail): return dict(id=id, kind='section', eyebrow=eyebrow, word=word, claim=claim, detail=detail)
-def figure(id, svg, title=None, box=(0, 0, W, H), trim=False): return dict(id=id, kind='figure', svg=svg, title=title, box=box, trim=trim)
+def figure(id, svg, title=None, box=(0, 0, W, H), trim=False, animated=False): return dict(id=id, kind='figure', svg=svg, title=title, box=box, trim=trim, animated=animated)
+def shown_as(slide): return f"s{slide['id']}." + ('svg' if slide.get('animated') else 'png')   # the file the manifest lists for this slide
 def static(id, png): return dict(id=id, kind='static', png=png)
 def margin(f): return (round(W * f), round(H * f), round(W * (1 - f)), round(H * (1 - f)))
 
@@ -122,13 +128,19 @@ def rasterise(svg_path, width):
     return Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=width))).convert('RGBA')
 
 
-def trimmed(im, pad=12):
-    """Crop to the ink (anything darker than near-white), plus a small margin."""
+def ink_bbox(im, pad=12):
+    """Bounding box of the ink (anything darker than near-white), plus a small margin; None for a blank image."""
     flat = Image.new('RGB', im.size, (255, 255, 255)); flat.paste(im, mask=im.split()[3])
     bbox = ImageOps.invert(flat.convert('L')).point(lambda v: 255 if v > 20 else 0).getbbox()
     if not bbox:
-        return im
-    return im.crop((max(0, bbox[0] - pad), max(0, bbox[1] - pad), min(im.width, bbox[2] + pad), min(im.height, bbox[3] + pad)))
+        return None
+    return (max(0, bbox[0] - pad), max(0, bbox[1] - pad), min(im.width, bbox[2] + pad), min(im.height, bbox[3] + pad))
+
+
+def trimmed(im, pad=12):
+    """Crop to the ink, plus a small margin."""
+    bbox = ink_bbox(im, pad)
+    return im.crop(bbox) if bbox else im
 
 
 def place_figure(im, svg, box, trim):
@@ -139,6 +151,36 @@ def place_figure(im, svg, box, trim):
     s = min(bw / fig.width, bh / fig.height)
     fig = fig.resize((round(fig.width * s), round(fig.height * s)), Image.LANCZOS)
     im.paste(fig, (box[0] + (bw - fig.width) // 2, box[1] + (bh - fig.height) // 2), fig)
+
+
+def animated_slide_svg(slide):
+    """The slide as one SVG: a white 2560x1440 canvas with the figure nested at its box. The nested <svg>'s
+    preserveAspectRatio='xMidYMid meet' is the fit place_figure gives the PNG (smallest scale, centred); trim becomes
+    the nested viewBox, measured on a raster exactly as for the PNG. Fira Mono rides along as @font-face data: URLs,
+    because an SVG shown through <img> may load nothing external. The figure's own <style> (the CSS animation) is
+    passed through untouched."""
+    import base64
+    assert not slide['title'], f"s{slide['id']}: an animated slide has no header; the figure is the whole slide"
+    box, trim = slide['box'], slide['trim']
+    bw, bh = box[2] - box[0], box[3] - box[1]
+    text = (FIGS / slide['svg']).read_text()
+    root = re.search(r'<svg\b[^>]*>', text)
+    attrs = dict(re.findall(r'([\w:-]+)="([^"]*)"', root.group(0)))
+    vx, vy, vw, vh = (float(v) for v in attrs['viewBox'].split())
+    if trim:
+        px = rasterise(FIGS / slide['svg'], bw * 2)
+        bb = ink_bbox(px)
+        if bb:
+            f = vw / px.width                                 # raster px -> figure user units
+            vx, vy, vw, vh = vx + bb[0] * f, vy + bb[1] * f, (bb[2] - bb[0]) * f, (bb[3] - bb[1]) * f
+    inner = re.sub(r'font-family="[^"]*"', f'font-family="{MONO}, monospace"', text[root.end():])   # up to and including </svg>
+    faces = ''.join(f"@font-face{{font-family:'{MONO}';font-weight:{wt};src:url(data:font/ttf;base64,"
+                    f"{base64.b64encode((FONTS / 'firamono' / f'FiraMono-{name}.ttf').read_bytes()).decode()}) format('truetype')}}"
+                    for wt, name in ((400, 'Regular'), (700, 'Bold')))      # the figures use 400, 600 and 700; 600 resolves to Bold
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">\n'
+            f'<style>{faces}</style>\n<rect width="{W}" height="{H}" fill="#ffffff"/>\n'
+            f'<svg x="{box[0]}" y="{box[1]}" width="{bw}" height="{bh}" viewBox="{vx:.3f} {vy:.3f} {vw:.3f} {vh:.3f}" '
+            f'preserveAspectRatio="xMidYMid meet">' + inner + '\n</svg>\n')
 
 
 # ---- the four kinds ------------------------------------------------------------------------------------------
@@ -196,13 +238,17 @@ def build(out, force=False):
     names, digests, rendered = [], {}, 0
     for s in SLIDES:
         png, dg = out / f"s{s['id']}.png", inputs_digest(s)
-        if force or seen.get(png.name) != dg or not png.exists():
-            render(s).save(png); rendered += 1
+        shown = out / shown_as(s)                              # the PNG, or the SVG for an animated slide
+        if force or seen.get(png.name) != dg or not png.exists() or not shown.exists():
+            render(s).save(png); rendered += 1                 # the PNG is always rendered: the still for export_pptx.py
+            if s.get('animated'):
+                shown.write_text(animated_slide_svg(s))
             print(f"s{s['id']}  {s['kind']:8s} {s.get('svg') or s.get('png') or s.get('title') or s.get('word')}")
         digests[png.name] = dg
-        names.append(f"{out.name}/{png.name}")
-    for p in out.glob('s*.png'):                                # a slide removed from the list leaves no stray PNG
-        if f'{out.name}/{p.name}' not in names: p.unlink()
+        names.append(f"{out.name}/{shown.name}")
+    keep = {f"s{s['id']}.png" for s in SLIDES} | {shown_as(s) for s in SLIDES}
+    for p in list(out.glob('s*.png')) + list(out.glob('s*.svg')):   # a slide removed (or no longer animated) leaves no stray file
+        if p.name not in keep: p.unlink()
     stamp.write_text(json.dumps(digests, indent=1, sort_keys=True))
     (out / 'slides.json').write_text(json.dumps(names, indent=1))
     (out / 'slides.js').write_text('window.SLIDES = ' + json.dumps(names) + ';\n')   # file:// cannot fetch(); a script tag can

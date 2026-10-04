@@ -73,19 +73,28 @@ and a Chromium it can launch.
    the chain frames, whose shared canvas keeps every object in place from click to click. `margin(0.025)`
    is the whole slide minus a 2.5% safe zone (projector overscan; 0 reads as cropped). A click sequence
    is several `figure` lines with ids `012a`, `012b`, ...; adding a frame is adding a line.
+   `animated=True` is for an SVG whose own `<style>` carries a CSS animation (slide 19, the lookup reads):
+   the slide is then also written as `prague-deck/slides/sNNN.svg`, the whole 2560x1440 canvas with the figure
+   nested at the same fitted box and Fira Mono embedded as data: URLs, and that SVG is what the manifest lists
+   and the player shows (a CSS-animated SVG plays inside an `<img>`). The PNG is still rendered and committed:
+   it is the still `export_pptx.py` places. The player reloads an SVG slide under a fresh URL each time it is
+   shown so the animation starts at tick 0 (browsers share one timeline per image URL, and it would otherwise
+   have been running since the page loaded). No header on an animated slide.
 3. `python3 build_deck.py`, open `prague-deck/slides/sNNN.png` and look at it. Keep the figure grammar the
    deck already uses: orange pointers, grey overhead, blue user data, Fira Mono labels.
-4. Commit the generator, `figures/out/*.svg`, `slides.py` if a line changed, and the regenerated PNGs plus
-   `slides/inputs.json` together. `check_deck.py` fails if any of those is out of step with the others.
+4. Commit the generator, `figures/out/*.svg`, `slides.py` if a line changed, and the regenerated PNGs (and
+   slide SVGs) plus `slides/inputs.json` together. `check_deck.py` fails if any of those is out of step with
+   the others.
 
 ## Checking your work
 
 - `python3 check_deck.py -v` first, every time, before you commit. Standard library only, a second to run,
   and CI runs the same script on every push to `main`. It checks that `index.html` loads `slides/`, that
   the title and name are baked into the page, that nothing references the network, that the manifest
-  agrees with the PNGs on disk and with `slides.py`, that every PNG's recorded input digest matches the
+  agrees with the PNGs on disk and with `slides.py` (an animated slide is listed as its SVG and keeps its PNG
+  still), that every PNG's recorded input digest matches the
   current inputs (so an edited `slides.py` or SVG without a rebuild fails, without rendering anything),
-  and that every PNG is 2560x1440.
+  and that every PNG is 2560x1440 (every slide SVG: a 2560x1440 canvas with its fonts embedded).
 - `node test_deck.mjs <dir>` must list every slide in `prague-deck/slides/slides.js` (26 today) and the
   last screenshot must be the first body slide landing after the white-out.
 - The deck opens from `file://` with no network. Anything that needs a server, a CDN or a font download

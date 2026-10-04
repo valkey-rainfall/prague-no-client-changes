@@ -10,14 +10,16 @@ why there is no 13 and why the chain sequence is 012a..012g; renaming them would
 Four kinds of slide:
   headline(id, ...)                 the two big numbers (slide 2)
   section(id, eyebrow, word, claim, detail)   a section opener: one big word, the accent line, a claim
-  figure(id, svg, title=None, box=..., trim=False)   a figure from figures/out/, with an optional title above it
+  figure(id, svg, title=None, box=..., trim=False, animated=False)   a figure from figures/out/, with an optional title above it
   static(id, png)                   a finished PNG from assets/, used as is (the credits table)
 
 Boxes are (x0, y0, x1, y1) in slide pixels (2560x1440): the figure is fitted inside, aspect preserved, centred.
 `margin(f)` is the whole slide minus a fraction f on every side. trim=True crops the SVG's own white margin
 first so the drawing fills the box; NOT for the chain frames, whose shared canvas keeps every object in place
-from one click to the next. Titles are Open Sans SemiBold; no subtitles and no captions on figure slides (Rain
-says that aloud; a caption-heavy version was tried and reverted 2026-10-01).
+from one click to the next. animated=True is for an SVG that carries a CSS animation: the slide is then shown as
+an SVG (s<id>.svg, the figure nested at the same box) so the animation plays in the player; the PNG is still
+rendered as the still for the PowerPoint export. Titles are Open Sans SemiBold; no subtitles and no captions on
+figure slides (Rain says that aloud; a caption-heavy version was tried and reverted 2026-10-01).
 """
 from build_deck import headline, section, figure, static, margin
 
@@ -55,7 +57,7 @@ SLIDES = [
     figure('016', 'fig-fb-1-skiplist-topology.svg',   box=(0, 412, 2560, 1028), trim=True),
     figure('017', 'fig-fb-2-fbtree-topology.svg',     box=(0, 216, 2560, 1224), trim=True),
     figure('018', 'fig-fb-4-allocations-to-scale.svg', box=(-4, 0, 2560, 1440), trim=True),   # every allocation of 61 members, to scale
-    figure('019', 'fig-fb-6b-lookup-reads-short.svg', box=(292, 0, 2268, 1440), trim=True),   # 19 reads -> 7 reads
+    figure('019', 'fig-fb-6b-lookup-reads-short-animated.svg', box=(292, 0, 2268, 1440), trim=True, animated=True),   # 19 reads -> 7 reads, one compare per 0.45 s, loops
     figure('020', 'chart-overhead-2x2_step3_bptree.svg', box=CHART),
 
     # ---- close -----------------------------------------------------------------------------------------------

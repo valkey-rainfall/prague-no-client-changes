@@ -41,7 +41,7 @@ def main(argv):
     if signon:
         add(signon, 'Still of the live sign-on. The web deck (prague-deck/index.html) plays the real intro, with sound.')
     for rel in slides:
-        add(DECK / rel)
+        add((DECK / rel).with_suffix('.png'))      # an animated slide is listed as its SVG; the PNG still stands in for it here
     prs.save(out)
     n = len(slides) + bool(signon)
     print(f'{out} : {n} slides ({"sign-on still + " if signon else ""}{len(slides)} body), {out.stat().st_size / 1e6:.1f} MB'
