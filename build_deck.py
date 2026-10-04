@@ -40,7 +40,7 @@ FONTS = HERE / 'fonts'
 
 W, H = 2560, 1440
 S = W / 1920                               # text layouts are designed at 1920x1080 and rendered at 2560x1440
-INK, GREY, MUTED, ACCENT, RULE = '#111111', '#555555', '#8a8a8a', '#3F51C8', '#dddddd'
+INK, GREY, MUTED, FAINT, ACCENT, RULE = '#111111', '#555555', '#8a8a8a', '#c4c4c4', '#3F51C8', '#dddddd'
 MONO = 'Fira Mono'                         # the figures' label face; cairosvg does not walk a CSS font stack, so the
                                            # SVG's family list is replaced by this one name before rasterising
 
@@ -221,8 +221,10 @@ def render(slide):
         return im
     im, d = canvas()
     if k == 'headline':
-        shown = slide['cols'][:slide['show']] if slide['show'] else slide['cols']
-        for i, (x, (label, big)) in enumerate(zip((120, 1000), shown)):
+        n = slide['show'] or len(slide['cols'])
+        for i, (x, (label, big)) in enumerate(zip((120, 1000), slide['cols'])):
+            if i >= n:                                              # not yet revealed: the label alone, faint, where it will land
+                text(d, (x + 8, 390), label, font('Regular', 54), FAINT, 'ls'); continue
             if i: d.line([(P(960), P(340)), (P(960), P(780))], fill=RULE, width=P(2))   # the divider belongs to the second column
             text(d, (x + 8, 390), label, font('Regular', 54), INK, 'ls')
             text(d, (x, 640), big, font('Light', 300), INK, 'ls')
