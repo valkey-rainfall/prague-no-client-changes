@@ -9,7 +9,7 @@ why there is no 13 and why the chain sequence is 012a..012g; renaming them would
 
 Four kinds of slide:
   headline(id, ...)                 the two big numbers (slide 2)
-  section(id, eyebrow, word, claim, detail)   a section opener: one big word, the accent line, a claim
+  section(id, eyebrow, word, claim, detail)   a section opener: one big word beside the hexagon-corner mark; eyebrow, claim, detail optional (unused today)
   figure(id, svg, title=None, box=..., trim=False, animated=False)   a figure from figures/out/, with an optional title above it
   static(id, png)                   a finished PNG from assets/, used as is (the credits table)
 

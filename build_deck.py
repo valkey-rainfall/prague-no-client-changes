@@ -128,6 +128,32 @@ def rasterise(svg_path, width):
     return Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=width))).convert('RGBA')
 
 
+LOGO_BLUE = '#6983FF'                      # the Valkey mark's blue (valkey.io/img/valkey-horizontal.svg), not the deck accent
+
+
+def hex_corner(im, cx=1600, cy=700, w_diag=260, w_vert=280, color=LOGO_BLUE):
+    """The section openers' mark: the lower-right corner of a hexagon so large that only the corner is on the
+    slide, an echo of the logo's outline. A 30-degree limb arrives from below the slide, a vertical limb leaves
+    off the top; one mitered polygon, so the limbs may differ in width (the diagonal is drawn 7% narrower than
+    the vertical: at equal widths the eye reads the slanted band as the heavier one). Design px (1920x1080)."""
+    import math, cairosvg
+    u1 = (math.cos(math.radians(30)), -math.sin(math.radians(30)))      # along the diagonal, towards the corner
+    n1 = (math.sin(math.radians(30)), math.cos(math.radians(30)))       # the diagonal's outward normal (down-right)
+
+    def edge(side):                                                       # +1 outer edge, -1 inner edge
+        px, py = cx + side * n1[0] * w_diag / 2, cy + side * n1[1] * w_diag / 2    # a point on the diagonal's edge
+        x = cx + side * w_vert / 2                                                   # the vertical's edge
+        miter = (x, py + (x - px) / u1[0] * u1[1])
+        far = (px - u1[0] * 1500, py - u1[1] * 1500)                                 # well below the slide
+        return far, miter
+    (fo, mo), (fi, mi) = edge(+1), edge(-1)
+    pts = [fo, mo, (mo[0], -300), (mi[0], -300), mi, fi]
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 1920 1080">'
+           f'<polygon points="{" ".join(f"{x:.1f},{y:.1f}" for x, y in pts)}" fill="{color}"/></svg>')
+    ov = Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=W))).convert('RGBA')
+    im.paste(ov, (0, 0), ov)
+
+
 def ink_bbox(im, pad=12):
     """Bounding box of the ink (anything darker than near-white), plus a small margin; None for a blank image."""
     flat = Image.new('RGB', im.size, (255, 255, 255)); flat.paste(im, mask=im.split()[3])
@@ -201,9 +227,9 @@ def render(slide):
         d.line([(P(960), P(420)), (P(960), P(900))], fill=RULE, width=P(2))
         text(d, (120, 1010), slide['footnote'], font('Regular', 26), MUTED, 'ls')
     elif k == 'section':
+        hex_corner(im)                                          # the mark first, so the title paints over it if they ever meet
         if slide['eyebrow']: text(d, (120, 300), slide['eyebrow'].upper(), font('SemiBold', 22), MUTED, tracking=3)
         text(d, (112, 540), slide['word'], font('Light', 150), INK, 'ls')
-        d.rectangle([P(120), P(590), P(120 + 140), P(590 + 6)], fill=ACCENT)
         if slide['claim']: text(d, (120, 650), slide['claim'], font('SemiBold', 44), ACCENT)
         if slide['detail']: text(d, (120, 725), slide['detail'], font('Regular', 34), GREY)
     elif k == 'figure':
