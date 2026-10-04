@@ -34,8 +34,7 @@ SLIDES = [
     figure('003', 'chart-overhead-2x2.svg', box=CHART),                 # overhead per key, release by release (plain)
 
     # ---- Part 1: embedding ----------------------------------------------------------------------------------
-    section('004', 'Part 1 of 3', 'Embedding', 'One allocation instead of two',
-            'The key, field or member moves into the entry that pointed at it: 7–14 B saved per item'),
+    section('004', None, 'Embedding', None, None),                          # spoken: one allocation instead of two; 7–14 B saved per item
     figure('005', 'fig-embed-1-dict-key.svg',         title='Dictionary entry',                 box=EMBED),  # PR 541   8.0
     figure('006', 'fig-embed-2-hash-value.svg',       title='Hash entry',                       box=EMBED),  # PR 1579  9.0
     figure('007', 'fig-embed-3-zset-member.svg',      title='Sorted set: skiplist node',        box=EMBED),  # PR 2508  9.1
@@ -44,16 +43,14 @@ SLIDES = [
     figure('010', 'chart-overhead-2x2_step1_embedding.svg', box=CHART),
 
     # ---- Part 2: dict -> hashtable --------------------------------------------------------------------------
-    section('011', 'Part 2 of 3', 'Dict → Hashtable', 'One cache line per lookup',
-            'A bucket holds seven entries in 64 B; key and value share one object: 79 B → 64 B per key'),
+    section('011', None, 'Dict → Hashtable', None, None),                   # spoken: one cache line per lookup; 79 B → 64 B per key
     # the collision-chain sequence: 7.2 -> 8.0 -> (key, expiry into the object) -> 8.1, one click per frame
     *[figure(f'012{c}', f'fig-ht-6{t}-chain.svg', box=margin(0.025))
       for c, t in zip('abcdefg', ('a1', 'a2', 'a', 'b', 'c', 'd', 'e'))],
     figure('014', 'chart-overhead-2x2_step2_hashtable.svg', box=CHART),
 
     # ---- Part 3: skiplist -> B+ tree ------------------------------------------------------------------------
-    section('015', 'Part 3 of 3', 'Skiplist → B+ Tree', '62.2 B → 40.9 B per member',
-            'Members packed into leaves instead of one node each; a lookup is 7 reads instead of 19'),
+    section('015', None, 'Skiplist → B+ Tree', None, None),                 # spoken: 62.2 B → 40.9 B per member; 7 reads instead of 19
     figure('016', 'fig-fb-1-skiplist-topology.svg',   box=(0, 412, 2560, 1028), trim=True),
     figure('017', 'fig-fb-2-fbtree-topology.svg',     box=(0, 216, 2560, 1224), trim=True),
     figure('018', 'fig-fb-4-allocations-to-scale.svg', box=(-4, 0, 2560, 1440), trim=True),   # every allocation of 61 members, to scale
